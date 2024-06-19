@@ -27,11 +27,6 @@ class SecurityConfig(
             .formLogin { it.disable() }
             .authorizeHttpRequests {
                 it.requestMatchers(
-                    "/login",
-                    "/kakao",
-                    "/kakao/callback",
-                    "/signup",
-                    "/logout",
                     "/swagger-ui/**",
                     "/v3/api-docs/**"
                 ).permitAll()
