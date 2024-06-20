@@ -30,8 +30,8 @@ class SwaggerConfig {
             )
             .info(
                 Info()
-                    .title("Todo API")
-                    .description("Todo API schema")
+                    .title("blog API")
+                    .description("blog API schema")
                     .version("1.0.0")
             )
     }
