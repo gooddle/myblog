@@ -1,4 +1,4 @@
-package com.teamsparta.blog.domain.feed.dto
+package com.teamsparta.myblog.domain.feed.dto
 
 
 import com.teamsparta.myblog.domain.comment.dto.CreateCommentResponse
@@ -9,6 +9,6 @@ data class CreateFeedResponse(
     val title : String,
     val content : String,
     val createdAt : LocalDateTime,
-    val isDeleted: Boolean,
+    val deleted: Boolean,
     val comments :List<CreateCommentResponse>
 )

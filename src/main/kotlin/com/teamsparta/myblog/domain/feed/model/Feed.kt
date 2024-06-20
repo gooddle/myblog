@@ -1,6 +1,6 @@
 package com.teamsparta.myblog.domain.feed.model
 
-import com.teamsparta.blog.domain.feed.dto.CreateFeedResponse
+import com.teamsparta.myblog.domain.feed.dto.CreateFeedResponse
 import com.teamsparta.myblog.domain.comment.model.Comment
 import com.teamsparta.myblog.domain.comment.model.toResponse
 import com.teamsparta.myblog.domain.feed.dto.FeedRequest
@@ -25,7 +25,7 @@ class Feed(
     var updatedAt: LocalDateTime?= null,
 
     @Column(name ="is_deleted", nullable = false)
-    var isDeleted: Boolean = false,
+    var deleted: Boolean = false,
 
     @Column(name ="deleted_at",nullable=false)
     var deletedAt: LocalDateTime? = null,
@@ -52,8 +52,12 @@ class Feed(
     }
 
     fun softDeleted(){
-        isDeleted = true
+        deleted = true
         deletedAt = LocalDateTime.now()
+    }
+    fun status(){
+        deletedAt = null
+        updatedAt = LocalDateTime.now()
     }
 
 
@@ -66,7 +70,7 @@ fun Feed.toResponse(): CreateFeedResponse {
         title = title,
         content = content,
         createdAt = createdAt,
-        isDeleted = isDeleted,
+        deleted = deleted,
         comments = comments.map { it.toResponse() }
     )
 }

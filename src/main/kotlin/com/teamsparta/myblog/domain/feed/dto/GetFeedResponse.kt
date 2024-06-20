@@ -13,7 +13,7 @@ data class GetFeedResponse(
     val content : String,
     val createdAt : LocalDateTime,
     val updatedAt  : LocalDateTime?,
-    val isDeleted: Boolean,
+    val deleted: Boolean,
     val comments :List<GetCommentResponse>
 ){
     companion object {
@@ -24,7 +24,7 @@ data class GetFeedResponse(
                 feed.content,
                 feed.createdAt,
                 feed.updatedAt,
-                feed.isDeleted,
+                feed.deleted,
                 feed.comments.map { it.toUpdateResponse() }
             )
         }

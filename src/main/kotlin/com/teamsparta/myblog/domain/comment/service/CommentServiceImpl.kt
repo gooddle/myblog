@@ -27,7 +27,7 @@ class CommentServiceImpl(
     override fun createCommentAtFeed(feedId: Long, request: CommentRequest,authentication: Authentication): CreateCommentResponse {
        val user = findUserByAuthentication(authentication)
         val feed = feedRepository.findByIdOrNull(feedId) ?: throw ModelNotFoundException("Feed not found",feedId)
-        if(feed.isDeleted) throw IllegalStateException("삭제된 게시글입니다.")
+        if(feed.deleted) throw IllegalStateException("삭제된 게시글입니다.")
         val comment = Comment(
             title = request.title,
             content = request.content,
@@ -45,7 +45,7 @@ class CommentServiceImpl(
         val comment = findByFeedIdAndCommentId(feedId,commentId)
         checkUserAuthorization(user,comment)
 
-        if(comment.feed.isDeleted) throw IllegalStateException("삭제된 게시글입니다.")
+        if(comment.feed.deleted) throw IllegalStateException("삭제된 게시글입니다.")
 
         comment.updateCommentRequest(request)
         return GetCommentResponse.from(comment)
@@ -57,7 +57,7 @@ class CommentServiceImpl(
         val comment = findByFeedIdAndCommentId(feedId,commentId)
         checkUserAuthorization(user,comment)
 
-        if(comment.feed.isDeleted) throw IllegalStateException("삭제된 게시글입니다.")
+        if(comment.feed.deleted) throw IllegalStateException("삭제된 게시글입니다.")
 
         commentRepository.delete(comment)
 
