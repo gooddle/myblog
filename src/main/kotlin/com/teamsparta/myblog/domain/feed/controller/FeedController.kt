@@ -1,6 +1,6 @@
 package com.teamsparta.myblog.domain.feed.controller
 
-import com.teamsparta.blog.domain.feed.dto.CreateFeedResponse
+import com.teamsparta.myblog.domain.feed.dto.CreateFeedResponse
 import com.teamsparta.myblog.domain.feed.dto.FeedRequest
 import com.teamsparta.myblog.domain.feed.dto.GetFeedResponse
 import com.teamsparta.myblog.domain.feed.service.FeedService
@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("api/v1/feeds")
 @RestController
 class FeedController(
-    private var feedService: FeedService
+    private var feedService: FeedService,
+
 ) {
 
     @GetMapping
@@ -51,6 +52,13 @@ class FeedController(
         return ResponseEntity
             .status(HttpStatus.NO_CONTENT)
             .body(feedService.deleteFeed(feedId,authentication))
+    }
+
+    @PostMapping("/{feedId}")
+    fun recoverFeed(@PathVariable feedId: Long,authentication: Authentication):ResponseEntity<GetFeedResponse>{
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(feedService.recoverFeed(feedId,authentication))
     }
 
 

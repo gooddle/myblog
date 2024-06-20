@@ -1,6 +1,6 @@
 package com.teamsparta.myblog.domain.feed.service
 
-import com.teamsparta.blog.domain.feed.dto.CreateFeedResponse
+import com.teamsparta.myblog.domain.feed.dto.CreateFeedResponse
 import com.teamsparta.myblog.domain.feed.dto.FeedRequest
 import com.teamsparta.myblog.domain.feed.dto.GetFeedResponse
 import org.springframework.data.domain.Page
@@ -14,6 +14,7 @@ interface FeedService {
     fun createFeed(request: FeedRequest, authentication: Authentication): CreateFeedResponse
     fun updateFeed(feedId: Long,request:FeedRequest,authentication: Authentication): GetFeedResponse
     fun deleteFeed(feedId:Long,authentication: Authentication)
+    fun recoverFeed(feedId: Long,authentication: Authentication) :GetFeedResponse
 
 
 }

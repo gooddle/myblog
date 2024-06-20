@@ -1,6 +1,6 @@
 package com.teamsparta.myblog.domain.feed.service
 
-import com.teamsparta.blog.domain.feed.dto.CreateFeedResponse
+import com.teamsparta.myblog.domain.feed.dto.CreateFeedResponse
 import com.teamsparta.myblog.domain.exception.ModelNotFoundException
 import com.teamsparta.myblog.domain.feed.dto.FeedRequest
 import com.teamsparta.myblog.domain.feed.dto.GetFeedResponse
@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 
+
 @Service
 class FeedServiceImpl(
     private val feedRepository: FeedRepository,
@@ -25,13 +26,13 @@ class FeedServiceImpl(
 ): FeedService {
 
     override fun getFeedList(pageable: Pageable): Page<GetFeedResponse> {
-        val feeds = feedRepository.findByIsDeletedFalse(pageable)
+        val feeds = feedRepository.findByDeletedFalse(pageable)
         return GetFeedResponse.from(feeds)
     }
 
     override fun getFeedById(feedId: Long): GetFeedResponse {
         val feed = findFeedById(feedId)
-        if(feed.isDeleted) throw IllegalStateException("삭제된 게시물입니다.")
+        if(feed.deleted) throw IllegalStateException("삭제된 게시물입니다.")
         return GetFeedResponse.from(feed)
     }
 
@@ -52,7 +53,7 @@ class FeedServiceImpl(
         val feed = findFeedById(feedId)
         checkUserAuthorization(user, feed)
 
-        if (feed.isDeleted) throw ModelNotFoundException("Feed is deleted", feedId)
+        if (feed.deleted) throw ModelNotFoundException("Feed is deleted", feedId)
 
         feed.createFeedRequest(request)
         return GetFeedResponse.from(feed)
@@ -64,11 +65,28 @@ class FeedServiceImpl(
         val feed = findFeedById(feedId)
         checkUserAuthorization(user, feed)
 
-        if (feed.isDeleted) throw ModelNotFoundException("Feed is deleted", feedId)
+        if (feed.deleted) throw ModelNotFoundException("Feed is deleted", feedId)
 
         feed.softDeleted()
         feedRepository.save(feed)
     }
+    @Transactional
+    override fun recoverFeed(feedId: Long,authentication: Authentication): GetFeedResponse {
+        val user =findUserByAuthentication(authentication)
+        val feed =findFeedById(feedId)
+        checkUserAuthorization(user, feed)
+
+        if (feed.deleted) feed.deleted =false
+        else throw ModelNotFoundException("Feed is deleted", feedId)
+
+        feed.status()
+        feedRepository.save(feed)
+        return GetFeedResponse.from(feed)
+    }
+
+
+
+
 
 
 
