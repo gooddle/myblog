@@ -1,6 +1,6 @@
 package com.teamsparta.myblog.domain.feed.service
 
-import com.teamsparta.blog.domain.feed.dto.FeedResponse
+import com.teamsparta.blog.domain.feed.dto.CreateFeedResponse
 import com.teamsparta.myblog.domain.exception.ModelNotFoundException
 import com.teamsparta.myblog.domain.feed.dto.FeedRequest
 import com.teamsparta.myblog.domain.feed.dto.GetFeedResponse
@@ -29,13 +29,14 @@ class FeedServiceImpl(
         return GetFeedResponse.from(feeds)
     }
 
-    override fun getFeedById(feedId: Long): FeedResponse {
+    override fun getFeedById(feedId: Long): GetFeedResponse {
         val feed = findFeedById(feedId)
-        return feed.toResponse()
+        if(feed.isDeleted) throw IllegalStateException("삭제된 게시물입니다.")
+        return GetFeedResponse.from(feed)
     }
 
     @Transactional
-    override fun createFeed(request: FeedRequest, authentication: Authentication): FeedResponse {
+    override fun createFeed(request: FeedRequest, authentication: Authentication): CreateFeedResponse {
         val user = findUserByAuthentication(authentication)
         val feed = Feed(
             title = request.title,
