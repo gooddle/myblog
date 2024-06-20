@@ -1,6 +1,6 @@
 package com.teamsparta.myblog.domain.feed.controller
 
-import com.teamsparta.blog.domain.feed.dto.FeedResponse
+import com.teamsparta.blog.domain.feed.dto.CreateFeedResponse
 import com.teamsparta.myblog.domain.feed.dto.FeedRequest
 import com.teamsparta.myblog.domain.feed.dto.GetFeedResponse
 import com.teamsparta.myblog.domain.feed.service.FeedService
@@ -26,14 +26,14 @@ class FeedController(
     }
 
     @GetMapping("{feedId}")
-    fun getFeedById(@PathVariable feedId :Long): ResponseEntity<FeedResponse> {
+    fun getFeedById(@PathVariable feedId :Long): ResponseEntity<GetFeedResponse> {
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(feedService.getFeedById(feedId))
     }
 
     @PostMapping
-    fun createFeed(@RequestBody request: FeedRequest, authentication: Authentication): ResponseEntity<FeedResponse> {
+    fun createFeed(@RequestBody request: FeedRequest, authentication: Authentication): ResponseEntity<CreateFeedResponse> {
         return ResponseEntity
             .status(HttpStatus.CREATED)
             .body(feedService.createFeed(request,authentication))
