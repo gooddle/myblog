@@ -1,6 +1,6 @@
 package com.teamsparta.myblog.domain.feed.model
 
-import com.teamsparta.blog.domain.feed.dto.FeedResponse
+import com.teamsparta.blog.domain.feed.dto.CreateFeedResponse
 import com.teamsparta.myblog.domain.comment.model.Comment
 import com.teamsparta.myblog.domain.comment.model.toResponse
 import com.teamsparta.myblog.domain.feed.dto.FeedRequest
@@ -22,13 +22,13 @@ class Feed(
     var createdAt: LocalDateTime = LocalDateTime.now(),
 
     @Column(name ="updated_at",nullable = false)
-    var updatedAt: LocalDateTime?= LocalDateTime.now(),
+    var updatedAt: LocalDateTime?= null,
 
     @Column(name ="is_deleted", nullable = false)
     var isDeleted: Boolean = false,
 
     @Column(name ="deleted_at",nullable=false)
-    var deletedAt: LocalDateTime = LocalDateTime.now(),
+    var deletedAt: LocalDateTime? = null,
 
     @OneToMany(mappedBy = "feed", cascade = [(CascadeType.ALL)],orphanRemoval = true,fetch = FetchType.LAZY)
     var comments: MutableList<Comment> = mutableListOf(),
@@ -60,8 +60,8 @@ class Feed(
 
 }
 
-fun Feed.toResponse(): FeedResponse {
-    return FeedResponse(
+fun Feed.toResponse(): CreateFeedResponse {
+    return CreateFeedResponse(
         id =id!!,
         title = title,
         content = content,
