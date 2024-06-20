@@ -23,7 +23,9 @@ class UserController(
 
     @PostMapping("/login")
     fun login(@RequestBody request: LoginRequest): ResponseEntity<LoginResponse> {
-        return ResponseEntity.status(HttpStatus.OK).body(userService.loginUser(request))
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(userService.loginUser(request))
     }
 
 
@@ -33,9 +35,9 @@ class UserController(
         if(bindingResult.hasErrors()){
             throw IllegalStateException("userName :최소 3자에서 최대 20자까지, password :최소 4자에서 최대 15까지")
         }
-        return ResponseEntity.status(HttpStatus.OK).body(userService.signUpUser(request))
+        return ResponseEntity
+            .status(HttpStatus.OK)
+            .body(userService.signUpUser(request))
     }
-
-
 
 }

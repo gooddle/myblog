@@ -18,9 +18,11 @@ class UserServiceImpl(
     private val jwtPlugin: JwtPlugin,
 ): UserService {
     override fun loginUser(request: LoginRequest):LoginResponse{
-        val user = userRepository.findByUserName(request.userName) ?: throw  IllegalStateException("없는 user 입니다")
+        val user = userRepository.findByUserName(request.userName)
+            ?: throw  IllegalStateException("없는 user 입니다")
 
-        if(!passwordEncoder.matches(request.password, user.password)) throw IllegalStateException("비밀번호가 틀립니다.")
+        if(!passwordEncoder.matches(request.password, user.password))
+            throw IllegalStateException("비밀번호가 틀립니다.")
 
         if(request.password != request.password2th) throw IllegalStateException("2개의 비밀번호가 일치하지 않습니다.")
         return LoginResponse(
