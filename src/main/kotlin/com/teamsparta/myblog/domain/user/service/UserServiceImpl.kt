@@ -22,7 +22,7 @@ class UserServiceImpl(
 
         if(!passwordEncoder.matches(request.password, user.password)) throw IllegalStateException("비밀번호가 틀립니다.")
 
-        if(request.password != request.password2th) throw IllegalStateException("비밀번호가 틀립니다.")
+        if(request.password != request.password2th) throw IllegalStateException("2개의 비밀번호가 일치하지 않습니다.")
         return LoginResponse(
             token = jwtPlugin.generateAccessToken(
                 subject = user.id.toString(),
@@ -36,7 +36,7 @@ class UserServiceImpl(
         if(userRepository.existsByUserName(request.userName))
             throw  IllegalStateException("이미 사용중인 이름입니다.")
 
-        val passwordPattern = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[!@#\$%^&*\\-_])[A-Za-z\\d!@#\$%^&*\\-_]{4,}$".toRegex()
+        val passwordPattern = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[!@#\$%^&*\\-_])[A-Za-z\\d!@#\$%^&*\\-_]$".toRegex()
 
         if(!request.password.matches(passwordPattern))
             throw  IllegalStateException("대문자 소문자 특수 기호로 이루어진 비밀번호로 작성해주세요")
