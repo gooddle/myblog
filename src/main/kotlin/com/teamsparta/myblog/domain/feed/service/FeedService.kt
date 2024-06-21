@@ -16,5 +16,4 @@ interface FeedService {
     fun deleteFeed(feedId:Long,authentication: Authentication)
     fun recoverFeed(feedId: Long,authentication: Authentication) :GetFeedResponse
 
-
 }
