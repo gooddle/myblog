@@ -17,7 +17,7 @@ data class GetCommentResponse(
                 title = comment.title,
                 content = comment.content,
                 createdAt = comment.createdAt,
-                updatedAt = comment.updatedAt
+                updatedAt = comment.updatedAt!!
             )
         }
     }

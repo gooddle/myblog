@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page
 import java.time.LocalDateTime
 
 data class GetFeedResponse(
+
     val id :Long,
     val title : String,
     val content : String,
@@ -15,7 +16,7 @@ data class GetFeedResponse(
     val updatedAt  : LocalDateTime?,
     val deleted: Boolean,
     val comments :List<GetCommentResponse>
-){
+) {
     companion object {
         fun from(feed: Feed): GetFeedResponse {
             return GetFeedResponse(
@@ -28,6 +29,8 @@ data class GetFeedResponse(
                 feed.comments.map { it.toUpdateResponse() }
             )
         }
+
+
         fun from(feeds: Page<Feed>): Page<GetFeedResponse> {
             return feeds.map { from(it) }
         }
