@@ -61,6 +61,6 @@ fun Comment.toUpdateResponse(): GetCommentResponse {
         title=title,
         content = content,
         createdAt = createdAt,
-        updatedAt = updatedAt!!
+        updatedAt = updatedAt
     )
 }
