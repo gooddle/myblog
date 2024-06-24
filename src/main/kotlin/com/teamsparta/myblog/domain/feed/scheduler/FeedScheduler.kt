@@ -14,7 +14,7 @@ class FeedCleanupScheduler(private val feedRepository: FeedRepository) {
     private val logger = LoggerFactory.getLogger(FeedCleanupScheduler::class.java)
 
     @Transactional
-    @Scheduled(cron = "*/30 * * * * *", zone = "Asia/Seoul")
+    @Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul")
     fun cleanupDeletedFeeds() {
         logger.info("Starting cleanupDeletedFeeds task")
 
