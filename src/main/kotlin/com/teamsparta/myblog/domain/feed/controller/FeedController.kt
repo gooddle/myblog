@@ -3,7 +3,7 @@ package com.teamsparta.myblog.domain.feed.controller
 import com.teamsparta.myblog.domain.feed.dto.ApiFeedResponse
 import com.teamsparta.myblog.domain.feed.dto.CreateFeedResponse
 import com.teamsparta.myblog.domain.feed.dto.FeedRequest
-import com.teamsparta.myblog.domain.feed.dto.GetFeedResponse
+import com.teamsparta.myblog.domain.feed.dto.UpdateFeedResponse
 import com.teamsparta.myblog.domain.feed.service.FeedService
 import com.teamsparta.myblog.infra.aop.NotFoundException
 import org.springframework.data.domain.Page
@@ -22,14 +22,14 @@ class FeedController(
 ) {
 
     @GetMapping
-    fun getFeedList(@PageableDefault pageable: Pageable): ResponseEntity<Page<GetFeedResponse>> {
+    fun getFeedList(@PageableDefault pageable: Pageable): ResponseEntity<Page<UpdateFeedResponse>> {
         return ResponseEntity
             .status(HttpStatus.OK)
             .body(feedService.getFeedList(pageable))
     }
 
     @GetMapping("{feedId}")
-    fun getFeedById(@PathVariable feedId: Long): ResponseEntity<ApiFeedResponse<GetFeedResponse>> {
+    fun getFeedById(@PathVariable feedId: Long): ResponseEntity<ApiFeedResponse<UpdateFeedResponse>> {
        return try{
            val getFeedById = feedService.getFeedById(feedId)
            val response = ApiFeedResponse.success("${feedId}번 게시글 조회",HttpStatus.OK.value(),getFeedById)
@@ -62,7 +62,7 @@ class FeedController(
             @PathVariable feedId: Long,
             @RequestBody request: FeedRequest,
             authentication: Authentication
-        ): ResponseEntity<ApiFeedResponse<GetFeedResponse>> {
+        ): ResponseEntity<ApiFeedResponse<UpdateFeedResponse>> {
             return try {
                 feedService.updateFeed(feedId,request,authentication)
                 ResponseEntity.status(HttpStatus.ACCEPTED).body(ApiFeedResponse.success("${feedId}번 게시글 수정완료",HttpStatus.OK.value(),null))
@@ -91,7 +91,7 @@ class FeedController(
         fun recoverFeed(
             @PathVariable feedId: Long,
             authentication: Authentication
-        ): ResponseEntity<ApiFeedResponse<GetFeedResponse>> {
+        ): ResponseEntity<ApiFeedResponse<UpdateFeedResponse>> {
             return try {
                 feedService.recoverFeed(feedId,authentication)
                 ResponseEntity.status(HttpStatus.OK).body(ApiFeedResponse.success("${feedId}번 게시물 복구,",HttpStatus.OK.value(),null))

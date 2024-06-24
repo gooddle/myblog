@@ -2,7 +2,7 @@ package com.teamsparta.myblog.domain.feed.service
 
 import com.teamsparta.myblog.domain.feed.dto.CreateFeedResponse
 import com.teamsparta.myblog.domain.feed.dto.FeedRequest
-import com.teamsparta.myblog.domain.feed.dto.GetFeedResponse
+import com.teamsparta.myblog.domain.feed.dto.UpdateFeedResponse
 import com.teamsparta.myblog.domain.feed.model.Feed
 import com.teamsparta.myblog.domain.feed.model.toResponse
 import com.teamsparta.myblog.domain.feed.repository.FeedRepository
@@ -11,6 +11,7 @@ import com.teamsparta.myblog.domain.user.repository.UserRepository
 import com.teamsparta.myblog.infra.aop.NotFoundException
 import com.teamsparta.myblog.infra.security.UserPrincipal
 import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.core.Authentication
@@ -25,15 +26,16 @@ class FeedServiceImpl(
     private val userRepository: UserRepository,
 ): FeedService {
 
-    override fun getFeedList(pageable: Pageable): Page<GetFeedResponse> {
-        val feeds = feedRepository.findByDeletedFalse(pageable)
-        return GetFeedResponse.from(feeds)
+    override fun getFeedList(pageable: Pageable): Page<UpdateFeedResponse> {
+        val page = PageRequest.of(pageable.pageNumber, 5)
+        val feeds = feedRepository.findByDeletedFalse(page)
+        return UpdateFeedResponse.from(feeds)
     }
 
-    override fun getFeedById(feedId: Long): GetFeedResponse {
+    override fun getFeedById(feedId: Long): UpdateFeedResponse {
         val feed = feedRepository.findByFeedIdWithComments(feedId) ?: throw NotFoundException("Feed not found")
         if(feed.deleted) throw NotFoundException("삭제된 게시물입니다.")
-        return GetFeedResponse.from(feed)
+        return UpdateFeedResponse.from(feed)
     }
 
     @Transactional
@@ -48,7 +50,7 @@ class FeedServiceImpl(
     }
 
     @Transactional
-    override fun updateFeed(feedId: Long, request: FeedRequest, authentication: Authentication): GetFeedResponse {
+    override fun updateFeed(feedId: Long, request: FeedRequest, authentication: Authentication): UpdateFeedResponse {
         val user = findUserByAuthentication(authentication)
         val feed = findFeedById(feedId)
         checkUserAuthorization(user, feed)
@@ -56,7 +58,7 @@ class FeedServiceImpl(
         if (feed.deleted) throw NotFoundException("Feed is deleted")
 
         feed.createFeedRequest(request)
-        return GetFeedResponse.from(feed)
+        return UpdateFeedResponse.from(feed)
     }
 
     @Transactional
@@ -72,7 +74,7 @@ class FeedServiceImpl(
     }
 
     @Transactional
-    override fun recoverFeed(feedId: Long,authentication: Authentication): GetFeedResponse {
+    override fun recoverFeed(feedId: Long,authentication: Authentication): UpdateFeedResponse {
         val user =findUserByAuthentication(authentication)
         val feed =findFeedById(feedId)
         checkUserAuthorization(user, feed)
@@ -82,7 +84,7 @@ class FeedServiceImpl(
 
         feed.status()
         feedRepository.save(feed)
-        return GetFeedResponse.from(feed)
+        return UpdateFeedResponse.from(feed)
     }
 
 

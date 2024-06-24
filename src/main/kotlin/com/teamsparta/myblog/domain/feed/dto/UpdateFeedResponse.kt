@@ -1,13 +1,13 @@
 package com.teamsparta.myblog.domain.feed.dto
 
 
-import com.teamsparta.myblog.domain.comment.dto.GetCommentResponse
+import com.teamsparta.myblog.domain.comment.dto.UpdateCommentResponse
 import com.teamsparta.myblog.domain.comment.model.toUpdateResponse
 import com.teamsparta.myblog.domain.feed.model.Feed
 import org.springframework.data.domain.Page
 import java.time.LocalDateTime
 
-data class GetFeedResponse(
+data class UpdateFeedResponse(
 
     val id :Long,
     val title : String,
@@ -15,11 +15,11 @@ data class GetFeedResponse(
     val createdAt : LocalDateTime,
     val updatedAt  : LocalDateTime?,
     val deleted: Boolean,
-    val comments :List<GetCommentResponse>
+    val comments :List<UpdateCommentResponse>
 ) {
     companion object {
-        fun from(feed: Feed): GetFeedResponse {
-            return GetFeedResponse(
+        fun from(feed: Feed): UpdateFeedResponse {
+            return UpdateFeedResponse(
                 feed.id!!,
                 feed.title,
                 feed.content,
@@ -31,7 +31,7 @@ data class GetFeedResponse(
         }
 
 
-        fun from(feeds: Page<Feed>): Page<GetFeedResponse> {
+        fun from(feeds: Page<Feed>): Page<UpdateFeedResponse> {
             return feeds.map { from(it) }
         }
     }

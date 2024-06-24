@@ -14,17 +14,17 @@ class FeedCleanupScheduler(private val feedRepository: FeedRepository) {
     private val logger = LoggerFactory.getLogger(FeedCleanupScheduler::class.java)
 
     @Transactional
-    @Scheduled(cron = "0 0 0 * * MON", zone = "Asia/Seoul")
+    @Scheduled(cron = "*/30 * * * * *", zone = "Asia/Seoul")
     fun cleanupDeletedFeeds() {
         logger.info("Starting cleanupDeletedFeeds task")
 
         try {
-            val olderFeeds = LocalDateTime.now().minusHours(5)
-            val deletedFeed = feedRepository.findByDeletedAtBefore(olderFeeds)
+            val olderFeeds = LocalDateTime.now().minusHours(3)
+
+            val deletedFeed = feedRepository.findAndDeleteByDeletedAtBefore(olderFeeds)
 
             logger.info("Found ${deletedFeed.size} feeds to delete")
 
-            feedRepository.deleteIn(deletedFeed)
 
             logger.info("Finished cleanupDeletedFeeds task")
 
