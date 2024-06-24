@@ -10,6 +10,7 @@ import com.teamsparta.myblog.domain.exception.ModelNotFoundException
 import com.teamsparta.myblog.domain.feed.repository.FeedRepository
 import com.teamsparta.myblog.domain.user.model.User
 import com.teamsparta.myblog.domain.user.repository.UserRepository
+import com.teamsparta.myblog.infra.aop.NotFoundException
 import com.teamsparta.myblog.infra.security.UserPrincipal
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.core.Authentication
@@ -45,7 +46,7 @@ class CommentServiceImpl(
         val comment = findByFeedIdAndCommentId(feedId,commentId)
         checkUserAuthorization(user,comment)
 
-        if(comment.feed.deleted) throw IllegalStateException("삭제된 게시글입니다.")
+        if(comment.feed.deleted) throw NotFoundException("삭제된 게시글입니다.")
 
         comment.updateCommentRequest(request)
         return UpdateCommentResponse.from(comment)
@@ -57,7 +58,7 @@ class CommentServiceImpl(
         val comment = findByFeedIdAndCommentId(feedId,commentId)
         checkUserAuthorization(user,comment)
 
-        if(comment.feed.deleted) throw IllegalStateException("삭제된 게시글입니다.")
+        if(comment.feed.deleted) throw NotFoundException("삭제된 게시글입니다.")
 
         commentRepository.delete(comment)
 
@@ -65,7 +66,7 @@ class CommentServiceImpl(
 
     private fun findUserByAuthentication(authentication:Authentication) : User {
         val userPrincipal = authentication.principal as UserPrincipal
-        return userRepository.findByUserName(userPrincipal.userName) ?: throw IllegalStateException("User not found")
+        return userRepository.findByUserName(userPrincipal.userName) ?: throw NotFoundException("User not found")
     }
 
     private fun findByFeedIdAndCommentId(feedId: Long,commentId: Long) : Comment {
@@ -73,7 +74,7 @@ class CommentServiceImpl(
     }
 
     private fun checkUserAuthorization(user:User,comment:Comment){
-        if(user.id != comment.user.id) throw IllegalStateException("권한이 없습니다.")
+        if(user.id != comment.user.id) throw NotFoundException("권한이 없습니다.")
     }
 
 
