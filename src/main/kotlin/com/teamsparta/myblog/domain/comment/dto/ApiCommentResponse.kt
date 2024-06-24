@@ -8,8 +8,8 @@ data class ApiCommentResponse<T>(
     val data: T?
 ){
     companion object{
-        fun <T> success(message: String?,data :T?):ApiCommentResponse<T>{
-            return ApiCommentResponse(message, HttpStatus.OK.value(),data)
+        fun <T> success(message: String?,status: Int,data :T?):ApiCommentResponse<T>{
+            return ApiCommentResponse(message, status,data)
         }
 
         fun <T> error(message: String?):ApiCommentResponse<T>{

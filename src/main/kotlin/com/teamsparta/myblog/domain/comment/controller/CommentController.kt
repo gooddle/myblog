@@ -24,7 +24,7 @@ class CommentController(
     ): ResponseEntity<ApiCommentResponse<CreateCommentResponse>> {
         return try {
             val createComment = commentService.createCommentAtFeed(feedId,request,authentication)
-            val response = ApiCommentResponse.success("${feedId}번 게시글에 댓글 생성",createComment)
+            val response = ApiCommentResponse.success("${feedId}번 게시글에 댓글 생성",HttpStatus.CREATED.value(),createComment)
             ResponseEntity.status(HttpStatus.CREATED).body(response)
         }
         catch (e:NotFoundException){
@@ -39,9 +39,8 @@ class CommentController(
                       authentication: Authentication
     ): ResponseEntity<ApiCommentResponse<GetCommentResponse>> {
         return try {
-            val updateComment =commentService.updateCommentAtFeed(feedId,commentId,request,authentication)
-            val response = ApiCommentResponse.success("${feedId}번 피드에 ${commentId}번 댓글 수정",updateComment)
-            ResponseEntity.status(HttpStatus.OK).body(response)
+            commentService.updateCommentAtFeed(feedId,commentId,request,authentication)
+            ResponseEntity.status(HttpStatus.ACCEPTED).body(ApiCommentResponse.success("댓글 업데이트 성공 ",HttpStatus.OK.value(),null))
         }
         catch (e:NotFoundException){
             ResponseEntity.badRequest().body(ApiCommentResponse.error(e.message))
@@ -55,9 +54,8 @@ class CommentController(
                       authentication: Authentication
     ): ResponseEntity<ApiCommentResponse<Unit>> {
         return try {
-            val deleteComment =commentService.deleteCommentAtFeed(feedId,commentId,authentication)
-            val response = ApiCommentResponse.success("${feedId}번 게시글 ${commentId}번 댓글 삭제 완료",deleteComment)
-            ResponseEntity.status(HttpStatus.NO_CONTENT).body(response)
+            commentService.deleteCommentAtFeed(feedId,commentId,authentication)
+            ResponseEntity.status(HttpStatus.NO_CONTENT).body(ApiCommentResponse.success("댓글 삭제 성공",HttpStatus.NO_CONTENT.value(),null))
         }
         catch (e:NotFoundException){
             ResponseEntity.badRequest().body(ApiCommentResponse.error(e.message))
