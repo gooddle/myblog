@@ -61,7 +61,6 @@ class Feed(
     }
 
 
-
 }
 
 fun Feed.toResponse(): CreateFeedResponse {

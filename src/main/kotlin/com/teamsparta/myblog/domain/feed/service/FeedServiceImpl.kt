@@ -31,7 +31,7 @@ class FeedServiceImpl(
     }
 
     override fun getFeedById(feedId: Long): GetFeedResponse {
-        val feed = feedRepository.findByIdWithComments(feedId)
+        val feed = feedRepository.findByFeedIdWithComments(feedId) ?: throw NotFoundException("Feed not found")
         if(feed.deleted) throw NotFoundException("삭제된 게시물입니다.")
         return GetFeedResponse.from(feed)
     }
@@ -84,6 +84,7 @@ class FeedServiceImpl(
         feedRepository.save(feed)
         return GetFeedResponse.from(feed)
     }
+
 
 
 

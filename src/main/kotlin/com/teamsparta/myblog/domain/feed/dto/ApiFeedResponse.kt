@@ -8,8 +8,8 @@ data class ApiFeedResponse<T>(
     val data: T?
 ) {
     companion object {
-        fun <T> success(message: String, data: T): ApiFeedResponse<T> {
-            return ApiFeedResponse(message, HttpStatus.OK.value(), data)
+        fun <T> success(message: String?, status: Int,data: T?): ApiFeedResponse<T> {
+            return ApiFeedResponse(message, status, data)
         }
 
         fun <T> error(message: String?): ApiFeedResponse<T> {

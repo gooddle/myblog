@@ -32,7 +32,7 @@ class FeedController(
     fun getFeedById(@PathVariable feedId: Long): ResponseEntity<ApiFeedResponse<GetFeedResponse>> {
        return try{
            val getFeedById = feedService.getFeedById(feedId)
-           val response = ApiFeedResponse.success("${feedId}번 조회",getFeedById)
+           val response = ApiFeedResponse.success("${feedId}번 게시글 조회",HttpStatus.OK.value(),getFeedById)
            ResponseEntity.status(HttpStatus.OK).body(response)
        }
        catch (e:NotFoundException){
@@ -48,7 +48,7 @@ class FeedController(
     ): ResponseEntity<ApiFeedResponse<CreateFeedResponse>> {
         return try {
             val createFeed = feedService.createFeed(request, authentication)
-            val response = ApiFeedResponse.success("게시글 작성 성공", createFeed)
+            val response = ApiFeedResponse.success("게시글 작성 성공",HttpStatus.CREATED.value(), createFeed)
             ResponseEntity.status(HttpStatus.ACCEPTED).body(response)
         }
         catch (e: NotFoundException) {
@@ -64,9 +64,8 @@ class FeedController(
             authentication: Authentication
         ): ResponseEntity<ApiFeedResponse<GetFeedResponse>> {
             return try {
-                val updatedFeed = feedService.updateFeed(feedId, request, authentication)
-                val response = ApiFeedResponse.success("게시글 수정 성공", updatedFeed)
-                ResponseEntity.status(HttpStatus.ACCEPTED).body(response)
+                feedService.updateFeed(feedId,request,authentication)
+                ResponseEntity.status(HttpStatus.ACCEPTED).body(ApiFeedResponse.success("${feedId}번 게시글 수정완료",HttpStatus.OK.value(),null))
 
             } catch (e: NotFoundException) {
                 ResponseEntity.badRequest().body(ApiFeedResponse.error(e.message))
@@ -79,9 +78,8 @@ class FeedController(
             authentication: Authentication
         ): ResponseEntity<ApiFeedResponse<Unit>> {
             return try {
-                val deletedFeed = feedService.deleteFeed(feedId, authentication)
-                val response = ApiFeedResponse.success("게시글 삭제 성공", deletedFeed)
-                ResponseEntity.status(HttpStatus.ACCEPTED).body(response)
+                feedService.deleteFeed(feedId,authentication)
+                ResponseEntity.status(HttpStatus.NO_CONTENT).body(ApiFeedResponse.success("${feedId}번 게시글 삭제 성공",HttpStatus.NO_CONTENT.value(),null))
 
             } catch (e: NotFoundException) {
                 ResponseEntity.badRequest().body(ApiFeedResponse.error(e.message))
@@ -95,13 +93,11 @@ class FeedController(
             authentication: Authentication
         ): ResponseEntity<ApiFeedResponse<GetFeedResponse>> {
             return try {
-                val recoverFeed = feedService.recoverFeed(feedId, authentication)
-                val response = ApiFeedResponse.success("게시글 복구 성공", recoverFeed)
-                ResponseEntity.status(HttpStatus.ACCEPTED).body(response)
+                feedService.recoverFeed(feedId,authentication)
+                ResponseEntity.status(HttpStatus.OK).body(ApiFeedResponse.success("${feedId}번 게시물 복구,",HttpStatus.OK.value(),null))
 
             } catch (e: NotFoundException) {
                 ResponseEntity.badRequest().body(ApiFeedResponse.error(e.message))
             }
         }
-
 }

@@ -15,5 +15,4 @@ interface FeedService {
     fun updateFeed(feedId: Long,request:FeedRequest,authentication: Authentication): GetFeedResponse
     fun deleteFeed(feedId:Long,authentication: Authentication)
     fun recoverFeed(feedId: Long,authentication: Authentication) :GetFeedResponse
-
 }
