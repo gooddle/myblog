@@ -2,7 +2,7 @@ package com.teamsparta.myblog.domain.comment.model
 
 import com.teamsparta.myblog.domain.comment.dto.CommentRequest
 import com.teamsparta.myblog.domain.comment.dto.CreateCommentResponse
-import com.teamsparta.myblog.domain.comment.dto.GetCommentResponse
+import com.teamsparta.myblog.domain.comment.dto.UpdateCommentResponse
 import com.teamsparta.myblog.domain.feed.model.Feed
 import com.teamsparta.myblog.domain.user.model.User
 import jakarta.persistence.*
@@ -55,8 +55,8 @@ fun Comment.toResponse(): CreateCommentResponse {
     )
 }
 
-fun Comment.toUpdateResponse(): GetCommentResponse {
-    return GetCommentResponse(
+fun Comment.toUpdateResponse(): UpdateCommentResponse {
+    return UpdateCommentResponse(
         id=id!!,
         title=title,
         content = content,

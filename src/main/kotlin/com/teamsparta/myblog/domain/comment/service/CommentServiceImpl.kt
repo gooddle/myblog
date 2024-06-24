@@ -2,7 +2,7 @@ package com.teamsparta.myblog.domain.comment.service
 
 import com.teamsparta.myblog.domain.comment.dto.CommentRequest
 import com.teamsparta.myblog.domain.comment.dto.CreateCommentResponse
-import com.teamsparta.myblog.domain.comment.dto.GetCommentResponse
+import com.teamsparta.myblog.domain.comment.dto.UpdateCommentResponse
 import com.teamsparta.myblog.domain.comment.model.Comment
 import com.teamsparta.myblog.domain.comment.model.toResponse
 import com.teamsparta.myblog.domain.comment.repository.CommentRepository
@@ -40,7 +40,7 @@ class CommentServiceImpl(
     }
 
     @Transactional
-    override fun updateCommentAtFeed(feedId: Long,commentId:Long,request: CommentRequest,authentication: Authentication): GetCommentResponse {
+    override fun updateCommentAtFeed(feedId: Long,commentId:Long,request: CommentRequest,authentication: Authentication): UpdateCommentResponse {
         val user = findUserByAuthentication(authentication)
         val comment = findByFeedIdAndCommentId(feedId,commentId)
         checkUserAuthorization(user,comment)
@@ -48,7 +48,7 @@ class CommentServiceImpl(
         if(comment.feed.deleted) throw IllegalStateException("삭제된 게시글입니다.")
 
         comment.updateCommentRequest(request)
-        return GetCommentResponse.from(comment)
+        return UpdateCommentResponse.from(comment)
     }
 
     @Transactional

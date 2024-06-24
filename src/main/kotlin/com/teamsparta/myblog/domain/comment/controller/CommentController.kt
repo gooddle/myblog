@@ -3,7 +3,7 @@ package com.teamsparta.myblog.domain.comment.controller
 import com.teamsparta.myblog.domain.comment.dto.ApiCommentResponse
 import com.teamsparta.myblog.domain.comment.dto.CommentRequest
 import com.teamsparta.myblog.domain.comment.dto.CreateCommentResponse
-import com.teamsparta.myblog.domain.comment.dto.GetCommentResponse
+import com.teamsparta.myblog.domain.comment.dto.UpdateCommentResponse
 import com.teamsparta.myblog.domain.comment.service.CommentService
 import com.teamsparta.myblog.infra.aop.NotFoundException
 import org.springframework.http.HttpStatus
@@ -37,7 +37,7 @@ class CommentController(
                       @PathVariable commentId: Long,
                       @RequestBody request: CommentRequest,
                       authentication: Authentication
-    ): ResponseEntity<ApiCommentResponse<GetCommentResponse>> {
+    ): ResponseEntity<ApiCommentResponse<UpdateCommentResponse>> {
         return try {
             commentService.updateCommentAtFeed(feedId,commentId,request,authentication)
             ResponseEntity.status(HttpStatus.ACCEPTED).body(ApiCommentResponse.success("댓글 업데이트 성공 ",HttpStatus.OK.value(),null))

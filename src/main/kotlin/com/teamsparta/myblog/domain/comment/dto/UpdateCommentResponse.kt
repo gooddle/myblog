@@ -3,7 +3,7 @@ package com.teamsparta.myblog.domain.comment.dto
 import com.teamsparta.myblog.domain.comment.model.Comment
 import java.time.LocalDateTime
 
-data class GetCommentResponse(
+data class UpdateCommentResponse(
     val id :Long,
     val title :String,
     val content :String,
@@ -11,8 +11,8 @@ data class GetCommentResponse(
     val updatedAt :LocalDateTime?
 ){
     companion object{
-        fun from(comment: Comment) : GetCommentResponse{
-            return GetCommentResponse(
+        fun from(comment: Comment) : UpdateCommentResponse{
+            return UpdateCommentResponse(
                 id =comment.id!!,
                 title = comment.title,
                 content = comment.content,
