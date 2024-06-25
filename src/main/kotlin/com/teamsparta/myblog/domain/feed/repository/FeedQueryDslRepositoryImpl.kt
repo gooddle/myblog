@@ -25,18 +25,18 @@ class  FeedQueryDslRepositoryImpl(
     private val comment: QComment = QComment.comment
 
 
-    override fun findByDeletedFalse(pageable: Pageable,title: String?,firstDay: Long?,secondDay: Long?,category: FeedCategory?): Page<Feed> {
+    override fun findByDeletedFalse(pageable: Pageable,title : String?,firstDay: Long?,secondDay: Long?,category: FeedCategory?): Page<Feed> {
         val whereClause = BooleanBuilder()
         whereClause.and(feed.deleted.eq(false))
 
         title?.let {
-            whereClause.and(titleLike(it))
+            whereClause.and(titleLike(title))
         }
         firstDay?.let {
-            whereClause.and(widthInDays(firstDay, secondDay!!))
+            whereClause.and(widthInDays(firstDay,secondDay!!))
         }
         category?.let {
-            whereClause.and(searchByCategory(it))
+            whereClause.and(searchByCategory(category))
         }
 
         val totalCount = queryFactory.select(feed.count()).from(feed).where(whereClause).fetchOne() ?: 0L
