@@ -3,6 +3,7 @@ package com.teamsparta.myblog.domain.user.dto
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
 
+
 data class SignUpRequest(
 
     @field:NotBlank
