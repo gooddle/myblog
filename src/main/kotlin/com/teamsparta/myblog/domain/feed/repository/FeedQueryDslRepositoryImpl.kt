@@ -107,6 +107,6 @@ class  FeedQueryDslRepositoryImpl(
     }
 
     private fun searchByCategory(category:FeedCategory):BooleanExpression{
-        return feed.feedcategory.eq(category)
+        return feed.feedCategory.eq(category)
     }
 }
