@@ -2,9 +2,6 @@ package com.teamsparta.myblog.domain.feed.dto
 
 
 import com.teamsparta.myblog.domain.comment.dto.UpdateCommentResponse
-import com.teamsparta.myblog.domain.comment.model.toUpdateResponse
-import com.teamsparta.myblog.domain.feed.model.Feed
-import org.springframework.data.domain.Page
 import java.time.LocalDateTime
 
 data class UpdateFeedResponse(
@@ -17,24 +14,4 @@ data class UpdateFeedResponse(
     val deleted: Boolean,
     val category :String,
     val comments :List<UpdateCommentResponse>
-) {
-    companion object {
-        fun from(feed: Feed): UpdateFeedResponse {
-            return UpdateFeedResponse(
-                feed.id!!,
-                feed.title,
-                feed.content,
-                feed.createdAt,
-                feed.updatedAt,
-                feed.deleted,
-                feed.feedcategory.name,
-                feed.comments.map { it.toUpdateResponse() }
-            )
-        }
-
-
-        fun from(feeds: Page<Feed>): Page<UpdateFeedResponse> {
-            return feeds.map { from(it) }
-        }
-    }
-}
+)

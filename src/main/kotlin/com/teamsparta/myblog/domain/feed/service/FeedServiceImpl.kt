@@ -6,6 +6,7 @@ import com.teamsparta.myblog.domain.feed.dto.UpdateFeedResponse
 import com.teamsparta.myblog.domain.feed.model.Feed
 import com.teamsparta.myblog.domain.feed.model.FeedCategory
 import com.teamsparta.myblog.domain.feed.model.toResponse
+import com.teamsparta.myblog.domain.feed.model.toUpdateResponse
 import com.teamsparta.myblog.domain.feed.repository.FeedRepository
 import com.teamsparta.myblog.domain.user.model.User
 import com.teamsparta.myblog.domain.user.repository.UserRepository
@@ -30,13 +31,13 @@ class FeedServiceImpl(
     override fun getFeedList(pageable: Pageable,title: String?,firstDay: Long?,secondDay: Long?,category: FeedCategory?): Page<UpdateFeedResponse> {
         val page = PageRequest.of(pageable.pageNumber, 5)
         val feeds = feedRepository.findByDeletedFalse(page,title,firstDay,secondDay,category)
-        return UpdateFeedResponse.from(feeds)
+        return feeds.map { it.toUpdateResponse() }
     }
 
     override fun getFeedById(feedId: Long): UpdateFeedResponse {
         val feed = feedRepository.findByFeedIdWithComments(feedId) ?: throw NotFoundException("Feed not found")
         if(feed.deleted) throw NotFoundException("삭제된 게시물입니다.")
-        return UpdateFeedResponse.from(feed)
+        return feed.toUpdateResponse()
     }
 
     @Transactional
@@ -46,7 +47,7 @@ class FeedServiceImpl(
             title = request.title,
             content = request.content,
             user = user,
-            feedcategory = when(request.category){
+            feedCategory = when(request.category){
                 "IOS" -> FeedCategory.IOS
                 "ANDROID" -> FeedCategory.ANDROID
                 else -> FeedCategory.NORMAL
@@ -64,7 +65,7 @@ class FeedServiceImpl(
         if (feed.deleted) throw NotFoundException("Feed is deleted")
 
         feed.createFeedRequest(request)
-        return UpdateFeedResponse.from(feed)
+        return feed.toUpdateResponse()
     }
 
     @Transactional
@@ -90,7 +91,7 @@ class FeedServiceImpl(
 
         feed.status()
         feedRepository.save(feed)
-        return UpdateFeedResponse.from(feed)
+        return feed.toUpdateResponse()
     }
 
 

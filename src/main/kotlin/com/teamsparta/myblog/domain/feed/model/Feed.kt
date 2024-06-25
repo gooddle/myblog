@@ -3,7 +3,9 @@ package com.teamsparta.myblog.domain.feed.model
 import com.teamsparta.myblog.domain.feed.dto.CreateFeedResponse
 import com.teamsparta.myblog.domain.comment.model.Comment
 import com.teamsparta.myblog.domain.comment.model.toResponse
+import com.teamsparta.myblog.domain.comment.model.toUpdateResponse
 import com.teamsparta.myblog.domain.feed.dto.FeedRequest
+import com.teamsparta.myblog.domain.feed.dto.UpdateFeedResponse
 import com.teamsparta.myblog.domain.user.model.User
 import jakarta.persistence.*
 import java.time.LocalDateTime
@@ -39,7 +41,7 @@ class Feed(
 
     @Enumerated(EnumType.STRING)
     @Column(name="category",nullable = false)
-    var feedcategory: FeedCategory,
+    var feedCategory: FeedCategory,
 
 
 ) {
@@ -74,7 +76,20 @@ fun Feed.toResponse(): CreateFeedResponse {
         content = content,
         createdAt = createdAt,
         deleted = deleted,
-        category = feedcategory.name,
+        category = feedCategory.name,
         comments = comments.map { it.toResponse() }
+    )
+}
+
+fun Feed.toUpdateResponse(): UpdateFeedResponse {
+    return UpdateFeedResponse(
+        id =id!!,
+        title = title,
+        content = content,
+        createdAt = createdAt,
+        updatedAt = updatedAt,
+        deleted = deleted,
+        category = feedCategory.name,
+        comments = comments.map{it.toUpdateResponse()}
     )
 }
