@@ -35,7 +35,11 @@ class Feed(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name ="user_id")
-    var user : User
+    var user : User,
+
+    @Enumerated(EnumType.STRING)
+    @Column(name="category",nullable = false)
+    var feedcategory: FeedCategory,
 
 
 ) {
@@ -70,6 +74,7 @@ fun Feed.toResponse(): CreateFeedResponse {
         content = content,
         createdAt = createdAt,
         deleted = deleted,
+        category = feedcategory.name,
         comments = comments.map { it.toResponse() }
     )
 }

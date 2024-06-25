@@ -1,9 +1,7 @@
 package com.teamsparta.myblog.domain.feed.controller
 
-import com.teamsparta.myblog.domain.feed.dto.ApiFeedResponse
-import com.teamsparta.myblog.domain.feed.dto.CreateFeedResponse
-import com.teamsparta.myblog.domain.feed.dto.FeedRequest
-import com.teamsparta.myblog.domain.feed.dto.UpdateFeedResponse
+import com.teamsparta.myblog.domain.feed.dto.*
+import com.teamsparta.myblog.domain.feed.model.FeedCategory
 import com.teamsparta.myblog.domain.feed.service.FeedService
 import com.teamsparta.myblog.infra.aop.NotFoundException
 import org.springframework.data.domain.Page
@@ -22,10 +20,13 @@ class FeedController(
 ) {
 
     @GetMapping
-    fun getFeedList(@PageableDefault pageable: Pageable): ResponseEntity<Page<UpdateFeedResponse>> {
+    fun getFeedList(@PageableDefault pageable: Pageable
+                   ,@RequestParam(required = false)title: String?,firstDay: Long?,secondDay: Long?,category: FeedCategory?
+    ): ResponseEntity<Page<UpdateFeedResponse>> {
+
         return ResponseEntity
             .status(HttpStatus.OK)
-            .body(feedService.getFeedList(pageable))
+            .body(feedService.getFeedList(pageable,title,firstDay,secondDay,category))
     }
 
     @GetMapping("{feedId}")

@@ -10,5 +10,6 @@ data class CreateFeedResponse(
     val content : String,
     val createdAt : LocalDateTime,
     val deleted: Boolean,
+    val category : String,
     val comments :List<CreateCommentResponse>
 )
