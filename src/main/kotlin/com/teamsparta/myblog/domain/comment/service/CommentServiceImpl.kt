@@ -5,6 +5,7 @@ import com.teamsparta.myblog.domain.comment.dto.CreateCommentResponse
 import com.teamsparta.myblog.domain.comment.dto.UpdateCommentResponse
 import com.teamsparta.myblog.domain.comment.model.Comment
 import com.teamsparta.myblog.domain.comment.model.toResponse
+import com.teamsparta.myblog.domain.comment.model.toUpdateResponse
 import com.teamsparta.myblog.domain.comment.repository.CommentRepository
 import com.teamsparta.myblog.domain.exception.ModelNotFoundException
 import com.teamsparta.myblog.domain.feed.repository.FeedRepository
@@ -24,6 +25,7 @@ class CommentServiceImpl(
     private val commentRepository: CommentRepository,
     private val userRepository: UserRepository,
 ): CommentService {
+
     @Transactional
     override fun createCommentAtFeed(feedId: Long, request: CommentRequest,authentication: Authentication): CreateCommentResponse {
        val user = findUserByAuthentication(authentication)
@@ -49,7 +51,7 @@ class CommentServiceImpl(
         if(comment.feed.deleted) throw NotFoundException("삭제된 게시글입니다.")
 
         comment.updateCommentRequest(request)
-        return UpdateCommentResponse.from(comment)
+        return comment.toUpdateResponse()
     }
 
     @Transactional
