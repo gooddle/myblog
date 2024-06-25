@@ -15,6 +15,7 @@ data class UpdateFeedResponse(
     val createdAt : LocalDateTime,
     val updatedAt  : LocalDateTime?,
     val deleted: Boolean,
+    val category :String,
     val comments :List<UpdateCommentResponse>
 ) {
     companion object {
@@ -26,6 +27,7 @@ data class UpdateFeedResponse(
                 feed.createdAt,
                 feed.updatedAt,
                 feed.deleted,
+                feed.feedcategory.name,
                 feed.comments.map { it.toUpdateResponse() }
             )
         }

@@ -4,6 +4,7 @@ import com.teamsparta.myblog.domain.feed.dto.CreateFeedResponse
 import com.teamsparta.myblog.domain.feed.dto.FeedRequest
 import com.teamsparta.myblog.domain.feed.dto.UpdateFeedResponse
 import com.teamsparta.myblog.domain.feed.model.Feed
+import com.teamsparta.myblog.domain.feed.model.FeedCategory
 import com.teamsparta.myblog.domain.feed.model.toResponse
 import com.teamsparta.myblog.domain.feed.repository.FeedRepository
 import com.teamsparta.myblog.domain.user.model.User
@@ -26,9 +27,9 @@ class FeedServiceImpl(
     private val userRepository: UserRepository,
 ): FeedService {
 
-    override fun getFeedList(pageable: Pageable): Page<UpdateFeedResponse> {
+    override fun getFeedList(pageable: Pageable,title: String?,firstDay: Long?,secondDay: Long?,category: FeedCategory?): Page<UpdateFeedResponse> {
         val page = PageRequest.of(pageable.pageNumber, 5)
-        val feeds = feedRepository.findByDeletedFalse(page)
+        val feeds = feedRepository.findByDeletedFalse(page,title,firstDay,secondDay,category)
         return UpdateFeedResponse.from(feeds)
     }
 
@@ -44,7 +45,12 @@ class FeedServiceImpl(
         val feed = Feed(
             title = request.title,
             content = request.content,
-            user = user
+            user = user,
+            feedcategory = when(request.category){
+                "IOS" -> FeedCategory.IOS
+                "ANDROID" -> FeedCategory.ANDROID
+                else -> FeedCategory.NORMAL
+            }
         )
         return feedRepository.save(feed).toResponse()
     }
