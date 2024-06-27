@@ -1,6 +1,3 @@
-package com.teamsparta.myblog.domain.feed
-
-
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.teamsparta.myblog.domain.feed.dto.ApiFeedResponse
@@ -14,6 +11,7 @@ import io.kotest.matchers.shouldBe
 import io.mockk.clearAllMocks
 import io.mockk.every
 import io.mockk.junit5.MockKExtension
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import io.mockk.mockk
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -24,22 +22,17 @@ import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.PageRequest
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
-import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import java.time.LocalDateTime
-
-
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles("test")
 @Import(value = [QueryDslSupport::class])
 @ExtendWith(MockKExtension::class)
 class FeedControllerTest @Autowired constructor(
     private val mockMvc: MockMvc,
-    private val jwtPlugin: JwtPlugin,
-    private val objectMapper: ObjectMapper
+    private val jwtPlugin : JwtPlugin,
+    private val objectMapper : ObjectMapper,
 ) : DescribeSpec({
 
     extension(SpringExtension)
@@ -47,6 +40,8 @@ class FeedControllerTest @Autowired constructor(
     afterContainer {
         clearAllMocks()
     }
+
+
 
     val feedService = mockk<FeedService>()
 
@@ -192,49 +187,3 @@ class FeedControllerTest @Autowired constructor(
     }
 
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
