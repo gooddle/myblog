@@ -1,3 +1,6 @@
+package com.teamsparta.myblog.domain.feed
+
+
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.teamsparta.myblog.domain.feed.dto.ApiFeedResponse
