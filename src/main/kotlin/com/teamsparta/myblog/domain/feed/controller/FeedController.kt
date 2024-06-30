@@ -82,13 +82,15 @@ class FeedController(
                 feedService.deleteFeed(feedId,authentication)
                 ResponseEntity.status(HttpStatus.NO_CONTENT).body(ApiFeedResponse.success("${feedId}번 게시글 삭제 성공",HttpStatus.NO_CONTENT.value(),null))
 
+
+
             } catch (e: NotFoundException) {
                 ResponseEntity.badRequest().body(ApiFeedResponse.error(e.message))
             }
 
         }
 
-        @PostMapping("/{feedId}")
+        @PutMapping("/{feedId}")
         fun recoverFeed(
             @PathVariable feedId: Long,
             authentication: Authentication
