@@ -24,11 +24,12 @@ class  FeedQueryDslRepositoryImpl(
 
     private val comment: QComment = QComment.comment
 
-
+    //전체 조회시 페이지 정렬 기능 및 필터 기능
     override fun findByDeletedFalse(pageable: Pageable,title : String?,firstDay: Long?,secondDay: Long?,category: FeedCategory?): Page<Feed> {
         val whereClause = BooleanBuilder()
         whereClause.and(feed.deleted.eq(false))
 
+        // 람다 함수 익숙해지기
         title?.let {
             whereClause.and(titleLike(title))
         }
@@ -41,7 +42,7 @@ class  FeedQueryDslRepositoryImpl(
 
         val totalCount = queryFactory.select(feed.count()).from(feed).where(whereClause).fetchOne() ?: 0L
 
-
+        // offset 좀 더 이해 하기
         val query = queryFactory.selectFrom(feed)
             .where(whereClause)
             .leftJoin(feed.comments, comment).fetchJoin()
@@ -64,6 +65,7 @@ class  FeedQueryDslRepositoryImpl(
 
     }
 
+    //스케줄링 기능 삭제된 시점으로  특정 시간이 지난 feed들을 리스트로 만들어 한번에 삭제
     override fun findAndDeleteByDeletedAtBefore(olderFeeds: LocalDateTime): List<Feed> {
         val whereClause = BooleanBuilder()
         whereClause.and(feed.deletedAt.before(olderFeeds))
@@ -84,7 +86,7 @@ class  FeedQueryDslRepositoryImpl(
         return feedsToDelete
     }
 
-
+    //feed와 comment join을 통해 한번에 조회
     override fun findByFeedIdWithComments(feedId: Long): Feed? {
         val whereClause = BooleanBuilder()
         whereClause.and(feed.id.eq(feedId))
