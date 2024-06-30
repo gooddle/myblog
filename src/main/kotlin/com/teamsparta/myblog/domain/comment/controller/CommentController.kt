@@ -40,7 +40,7 @@ class CommentController(
     ): ResponseEntity<ApiCommentResponse<UpdateCommentResponse>> {
         return try {
             commentService.updateCommentAtFeed(feedId,commentId,request,authentication)
-            ResponseEntity.status(HttpStatus.ACCEPTED).body(ApiCommentResponse.success("댓글 업데이트 성공 ",HttpStatus.OK.value(),null))
+            ResponseEntity.status(HttpStatus.OK).body(ApiCommentResponse.success("댓글 업데이트 성공 ",HttpStatus.OK.value(),null))
         }
         catch (e:NotFoundException){
             ResponseEntity.badRequest().body(ApiCommentResponse.error(e.message))
