@@ -23,4 +23,10 @@
 - 인증된 토큰 기반으로 자신의 댓글만 삭제,수정 가능함
 
 
+# 2. user case diagram
+
+![제목 없는 다이어그램 drawio - draw io - Chrome 2024-06-30 오후 4_21_19](https://github.com/gooddle/myblog/assets/128583844/572ba74c-07f5-4a67-8c25-b4dd7f1bfa42)
+
+- diagram 순으로 진행되어야 한다.
+
 
