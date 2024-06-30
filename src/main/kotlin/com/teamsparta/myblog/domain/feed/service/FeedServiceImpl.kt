@@ -87,7 +87,7 @@ class FeedServiceImpl(
         checkUserAuthorization(user, feed)
 
         if (feed.deleted) feed.deleted =false
-        else throw NotFoundException("Feed is deleted")
+        else throw NotFoundException("삭제된 게시글이 아닙니다.")
 
         feed.status()
         feedRepository.save(feed)
