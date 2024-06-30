@@ -36,10 +36,28 @@
 - spring 스케줄을 이용하여 매일 밤 자정 삭제되며 삭제 시간이 자정 기준으로 12시간이 지난 글들을 영구 삭제한다.
 - 영구 삭제 전에 삭제된 본인의 글은 복구 가능
 - 게시글 및 댓글 생성 시 생성된 데이터 및 응답 코드, 생성 메세지 반환 
-- 게시글 및 댓글 수정 삭제 시 응답 코드와 생성 메세지만 반환  
+- 게시글 및 댓글 수정 삭제 시 응답 코드와 생성 메세지만 반환
+- 로그인 시 토큰과 응답코드 및 응답 메세지 반
 
 
 # 4. API diagram
 
 ![myblog – comment 2024-06-30 오후 4_52_13](https://github.com/gooddle/myblog/assets/128583844/fcede526-8ffd-49ee-a0bb-0472f7350f75)
+
+
+# 5. API 명세서 
+
+| Name     | URI(Resource)  | Method | Status Code |
+|--------- | -------------| -------------| -------------|
+| 게시글 작성 | /api/v1/feeds | POST | 201 |
+| 게시글 목록 조회 | /api/v1/feeds |  GET | 200 |
+| 선택한 할일 카드 조회 | /api/v1/feeds/{feedId} | GET | 200 |
+| 선택한 할일 카드 수정 | /api/v1/feeds/{feedId} | PUT | 200 |
+| 선택한 할일 카드 삭제 | /api/v1/feeds/{feedId}| DELETE | 204 |
+| 삭제된 본인 게시글 복구  | /api/v1/feeds/{feedId}| PUT | 200|
+|  댓글 작성 | /api/v1/feeds/{feedId}/comments |  POST | 201 |
+| 댓글 수정 | /api/v1/feeds/{feedId}/comments/{commentId} | PUT | 200 |
+| 댓글 삭제 | /api/v1/feeds/{feedId}/comments/{commentId} | DELETE | 204 |
+| 이메일 인증 코드 발송  | /api/v1/send-email-code | POST | 201 |
+
 
