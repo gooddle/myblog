@@ -56,7 +56,7 @@ class UserServiceImpl(
         if (request.password.contains(request.userName))
             throw NotFoundException("비밀번호와 닉네임은 동일하거나 포함될 수 없습니다.")
 
-        //회원가입이 끝나면 캐쉬에서 코드 삭제
+        //회원가입이 끝나면 redis에서 코드 삭제
         redisUtils.deleteData(request.emailCode)
 
 

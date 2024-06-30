@@ -30,7 +30,8 @@ class SecurityConfig(
                     "/api/v1/users/login",
                      "/api/v1/users/signup",
                     "/swagger-ui/**",
-                    "/v3/api-docs/**"
+                    "/v3/api-docs/**",
+                     "/api/v1/send-email-code",
                 ).permitAll()
                     .anyRequest().authenticated()
             }
