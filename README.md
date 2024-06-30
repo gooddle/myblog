@@ -28,5 +28,14 @@
 ![제목 없는 다이어그램 drawio - draw io - Chrome 2024-06-30 오후 4_21_19](https://github.com/gooddle/myblog/assets/128583844/572ba74c-07f5-4a67-8c25-b4dd7f1bfa42)
 
 - diagram 순으로 진행되어야 한다.
+- 게시글 삭제는 soft delete 방법을 사용한다 -> 게시글이 생성 할 시 false 삭제 될 시 true 값으로 저장된다.
+- 삭제 된 게시글 수정 및 조회 불가
+- 게시글 삭제 처리 할 시 삭제 시간을 저장한다.
+- spring 스케줄을 이용하여 매일 밤 자정 삭제되며 삭제 시간이 자정 기준으로 12시간이 지난 글들을 영구 삭제한다.
+- 영구 삭제 전에 삭제된 본인의 글은 복구 가능
 
+
+# 3. API diagram
+
+![myblog – comment 2024-06-30 오후 4_52_13](https://github.com/gooddle/myblog/assets/128583844/fcede526-8ffd-49ee-a0bb-0472f7350f75)
 
