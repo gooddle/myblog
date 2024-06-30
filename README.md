@@ -16,6 +16,7 @@
 ### 게시글 기능 
 - 로그인 , 토큰 인증 후 게시글 작성,수정,삭제 가능
 - 인증된 토큰 기반으로 자신의 게시글만 삭제, 수정 가능함
+- 검색 필터 기능 -> 제목, 날짜,카테고리 통한 검색 가능
 
 
 ### 댓글 기능 
@@ -27,6 +28,7 @@
 
 ![제목 없는 다이어그램 drawio - draw io - Chrome 2024-06-30 오후 4_21_19](https://github.com/gooddle/myblog/assets/128583844/572ba74c-07f5-4a67-8c25-b4dd7f1bfa42)
 
+# 3. 주요 정책
 - diagram 순으로 진행되어야 한다.
 - 게시글 삭제는 soft delete 방법을 사용한다 -> 게시글이 생성 할 시 false 삭제 될 시 true 값으로 저장된다.
 - 삭제 된 게시글 수정 및 조회 불가
@@ -35,7 +37,7 @@
 - 영구 삭제 전에 삭제된 본인의 글은 복구 가능
 
 
-# 3. API diagram
+# 4. API diagram
 
 ![myblog – comment 2024-06-30 오후 4_52_13](https://github.com/gooddle/myblog/assets/128583844/fcede526-8ffd-49ee-a0bb-0472f7350f75)
 
