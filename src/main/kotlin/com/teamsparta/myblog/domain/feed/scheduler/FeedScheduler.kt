@@ -19,7 +19,7 @@ class FeedCleanupScheduler(private val feedRepository: FeedRepository) {
         logger.info("Starting cleanupDeletedFeeds task")
 
         try {
-            val olderFeeds = LocalDateTime.now().minusHours(3)
+            val olderFeeds = LocalDateTime.now().minusHours(12)
 
             val deletedFeed = feedRepository.findAndDeleteByDeletedAtBefore(olderFeeds)
 
