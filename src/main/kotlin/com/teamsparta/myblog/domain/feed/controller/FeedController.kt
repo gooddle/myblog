@@ -50,7 +50,7 @@ class FeedController(
         return try {
             val createFeed = feedService.createFeed(request, authentication)
             val response = ApiFeedResponse.success("게시글 작성 성공",HttpStatus.CREATED.value(), createFeed)
-            ResponseEntity.status(HttpStatus.ACCEPTED).body(response)
+            ResponseEntity.status(HttpStatus.CREATED).body(response)
         }
         catch (e: NotFoundException) {
             ResponseEntity.badRequest().body(ApiFeedResponse.error(e.message))
@@ -66,7 +66,7 @@ class FeedController(
         ): ResponseEntity<ApiFeedResponse<UpdateFeedResponse>> {
             return try {
                 feedService.updateFeed(feedId,request,authentication)
-                ResponseEntity.status(HttpStatus.ACCEPTED).body(ApiFeedResponse.success("${feedId}번 게시글 수정완료",HttpStatus.OK.value(),null))
+                ResponseEntity.status(HttpStatus.OK).body(ApiFeedResponse.success("${feedId}번 게시글 수정완료",HttpStatus.OK.value(),null))
 
             } catch (e: NotFoundException) {
                 ResponseEntity.badRequest().body(ApiFeedResponse.error(e.message))
@@ -90,7 +90,7 @@ class FeedController(
 
         }
 
-        @PutMapping("/{feedId}")
+        @PutMapping("/recover/{feedId}")
         fun recoverFeed(
             @PathVariable feedId: Long,
             authentication: Authentication
