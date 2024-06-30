@@ -23,13 +23,13 @@ class Feed(
     @Column(name ="created_at",nullable=false)
     var createdAt: LocalDateTime = LocalDateTime.now(),
 
-    @Column(name ="updated_at",nullable = false)
+    @Column(name ="updated_at")
     var updatedAt: LocalDateTime?= null,
 
     @Column(name ="is_deleted", nullable = false)
     var deleted: Boolean = false,
 
-    @Column(name ="deleted_at",nullable=false)
+    @Column(name ="deleted_at")
     var deletedAt: LocalDateTime? = null,
 
     @OneToMany(mappedBy = "feed", cascade = [(CascadeType.ALL)],orphanRemoval = true,fetch = FetchType.LAZY)
