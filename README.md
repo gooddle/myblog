@@ -55,7 +55,7 @@
 | 선택한 할일 카드 조회 | /api/v1/feeds/{feedId} | GET | 200 |
 | 선택한 할일 카드 수정 | /api/v1/feeds/{feedId} | PUT | 200 |
 | 선택한 할일 카드 삭제 | /api/v1/feeds/{feedId}| DELETE | 204 |
-| 삭제된 본인 게시글 복구  | /api/v1/feeds/{feedId}| PUT | 200|
+| 삭제된 본인 게시글 복구  | /api/v1/feeds/recover/{feedId}| PUT | 200|
 |  댓글 작성 | /api/v1/feeds/{feedId}/comments |  POST | 201 |
 | 댓글 수정 | /api/v1/feeds/{feedId}/comments/{commentId} | PUT | 200 |
 | 댓글 삭제 | /api/v1/feeds/{feedId}/comments/{commentId} | DELETE | 204 |
