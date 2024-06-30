@@ -45,7 +45,9 @@ dependencies {
     implementation ("com.fasterxml.jackson.datatype:jackson-datatype-joda:2.13.1")
     implementation("org.springframework.boot:spring-boot-starter-aop")
     implementation("org.springframework.boot:spring-boot-starter-validation")
-    implementation("org.postgresql:postgresql")
+//    implementation("org.postgresql:postgresql")
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
+    implementation ("org.springframework.boot:spring-boot-starter-mail")
     implementation("com.querydsl:querydsl-jpa:$queryDslVersion:jakarta")
     kapt("com.querydsl:querydsl-apt:$queryDslVersion:jakarta")
 
