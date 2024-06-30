@@ -31,7 +31,7 @@ class RedisUtils(
     }
 
 
-    // 캐쉬에서 데이터 삭제
+    // Redis에서 데이터 삭제
     fun deleteData(key: String) {
         redisTemplate.delete(key)
     }
