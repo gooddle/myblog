@@ -14,7 +14,7 @@
 - header에 토큰 인증이 완료 되면 게시글 및 댓글 작성,수정,삭제가 가능함
 
 ### 게시글 기능 
-- 로그인 , 토큰 인증 후 게시글 작성,수정,삭제 가능
+- 로그인 , 토큰 인증 후 게시글 조회,작성,수정,삭제 가능
 - 인증된 토큰 기반으로 자신의 게시글만 삭제, 수정 가능함
 - 검색 필터 기능 -> 제목, 날짜,카테고리 통한 검색 가능
 
@@ -48,17 +48,19 @@
 
 # 5. API 명세서 
 
-| Name     | URI(Resource)  | Method | Status Code |
-|--------- | -------------| -------------| -------------|
-| 게시글 작성 | /api/v1/feeds | POST | 201 |
-| 게시글 목록 조회 | /api/v1/feeds |  GET | 200 |
-| 선택한 할일 카드 조회 | /api/v1/feeds/{feedId} | GET | 200 |
-| 선택한 할일 카드 수정 | /api/v1/feeds/{feedId} | PUT | 200 |
-| 선택한 할일 카드 삭제 | /api/v1/feeds/{feedId}| DELETE | 204 |
-| 삭제된 본인 게시글 복구  | /api/v1/feeds/{feedId}| PUT | 200|
-|  댓글 작성 | /api/v1/feeds/{feedId}/comments |  POST | 201 |
-| 댓글 수정 | /api/v1/feeds/{feedId}/comments/{commentId} | PUT | 200 |
-| 댓글 삭제 | /api/v1/feeds/{feedId}/comments/{commentId} | DELETE | 204 |
-| 이메일 인증 코드 발송  | /api/v1/send-email-code | POST | 201 |
+| Name          | URI(Resource)                               | Method | Status Code |
+|---------------|---------------------------------------------| -------------| -------------|
+| 게시글 작성        | /api/v1/feeds                               | POST | 201 |
+| 게시글 목록 조회     | /api/v1/feeds                               |  GET | 200 |
+| 선택한 할일 카드 조회  | /api/v1/feeds/{feedId}                      | GET | 200 |
+| 선택한 할일 카드 수정  | /api/v1/feeds/{feedId}                      | PUT | 200 |
+| 선택한 할일 카드 삭제  | /api/v1/feeds/{feedId}                      | DELETE | 204 |
+| 삭제된 본인 게시글 복구 | /api/v1/feeds/{feedId}                      | PUT | 200|
+| 댓글 작성         | /api/v1/feeds/{feedId}/comments             |  POST | 201 |
+| 댓글 수정         | /api/v1/feeds/{feedId}/comments/{commentId} | PUT | 200 |
+| 댓글 삭제         | /api/v1/feeds/{feedId}/comments/{commentId} | DELETE | 204 |
+| 이메일 인증 코드 발송  | /api/v1/send-email-code                     | POST | 201 |
+| 회원가입          | /api/v1/users/signup                        | POST | 201 |
+| 로그인           | /api/v1/users/login                         | POST | 201 |
 
 
