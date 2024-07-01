@@ -77,7 +77,6 @@ class FeedServiceImpl(
         if (feed.deleted) throw NotFoundException("Feed is deleted")
 
         feed.softDeleted()
-        feedRepository.save(feed)
     }
 
     @Transactional
@@ -90,7 +89,6 @@ class FeedServiceImpl(
         else throw NotFoundException("삭제된 게시글이 아닙니다.")
 
         feed.status()
-        feedRepository.save(feed)
         return feed.toUpdateResponse()
     }
 
