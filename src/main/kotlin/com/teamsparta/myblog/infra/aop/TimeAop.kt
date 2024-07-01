@@ -18,16 +18,16 @@ class TimeAop {
 
     @Around("@within(org.springframework.web.bind.annotation.RestController)")
     fun checkTime(joinPoint: ProceedingJoinPoint,
-    ) {
+    ) :Any? {
         val controllerName = joinPoint.signature.name
         val startTime = System.currentTimeMillis()
 
 
-        joinPoint.proceed()
+        val result =joinPoint.proceed()
         val endTime = System.currentTimeMillis()
         val duration = (endTime - startTime).toDouble() / 1000
         logger.info("$controllerName 실행 시간 $duration 초")
-
+        return result
 
 
     }
