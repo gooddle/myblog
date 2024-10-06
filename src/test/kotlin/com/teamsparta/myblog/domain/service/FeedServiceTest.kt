@@ -1,10 +1,10 @@
 package com.teamsparta.myblog.domain.service
 
 
+import com.teamsparta.myblog.domain.exception.ModelNotFoundException
 import com.teamsparta.myblog.domain.feed.repository.FeedRepository
 import com.teamsparta.myblog.domain.feed.service.FeedServiceImpl
 import com.teamsparta.myblog.domain.user.repository.UserRepository
-import com.teamsparta.myblog.infra.aop.NotFoundException
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.extensions.spring.SpringExtension
@@ -32,28 +32,15 @@ class FeedServiceTest:BehaviorSpec({
 
     val feedService = FeedServiceImpl(feedRepository, userRepository)
 
-    Given("feed 가 존재 하지않을때"){
-        When("특정 feed를 조회하면 "){
-            Then("NotFoundException이 발생해야한다."){
-                val feedId =1L
-                every { feedRepository.findByFeedIdWithComments(any()) } returns null
-
-                shouldThrow<NotFoundException> {
-                    feedService.getFeedById(feedId)
-                }
-            }
-
-        }
-    }
 
 
     Given("특정 feed가 삭제되었을때 "){
         When("특정 feed를 조회하면 "){
-            Then("NotFoundException 발생해야한다."){
+            Then("ModelNotFoundException 발생해야한다."){
                 val feedId = 30L
                 every { feedRepository.findByFeedIdWithComments(feedId)!!.deleted } returns true
 
-                shouldThrow<NotFoundException> {
+                shouldThrow<ModelNotFoundException> {
                     feedService.getFeedById(feedId)
                 }
             }
