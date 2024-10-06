@@ -11,7 +11,6 @@ import com.teamsparta.myblog.domain.exception.ModelNotFoundException
 import com.teamsparta.myblog.domain.feed.repository.FeedRepository
 import com.teamsparta.myblog.domain.user.model.User
 import com.teamsparta.myblog.domain.user.repository.UserRepository
-import com.teamsparta.myblog.infra.aop.NotFoundException
 import com.teamsparta.myblog.infra.security.UserPrincipal
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.core.Authentication
@@ -30,7 +29,7 @@ class CommentServiceImpl(
     override fun createCommentAtFeed(feedId: Long, request: CommentRequest,authentication: Authentication): CreateCommentResponse {
        val user = findUserByAuthentication(authentication)
         val feed = feedRepository.findByIdOrNull(feedId) ?: throw ModelNotFoundException("Feed not found",feedId)
-        if(feed.deleted) throw IllegalStateException("삭제된 게시글입니다.")
+        if(feed.deleted) throw ModelNotFoundException("Feed")
         val comment = Comment(
             title = request.title,
             content = request.content,
@@ -48,7 +47,7 @@ class CommentServiceImpl(
         val comment = findByFeedIdAndCommentId(feedId,commentId)
         checkUserAuthorization(user,comment)
 
-        if(comment.feed.deleted) throw NotFoundException("삭제된 게시글입니다.")
+        if(comment.feed.deleted) throw ModelNotFoundException("feed")
 
         comment.updateCommentRequest(request)
         return comment.toUpdateResponse()
@@ -60,7 +59,7 @@ class CommentServiceImpl(
         val comment = findByFeedIdAndCommentId(feedId,commentId)
         checkUserAuthorization(user,comment)
 
-        if(comment.feed.deleted) throw NotFoundException("삭제된 게시글입니다.")
+        if(comment.feed.deleted) throw ModelNotFoundException("feed.")
 
         commentRepository.delete(comment)
 
@@ -68,15 +67,15 @@ class CommentServiceImpl(
 
     private fun findUserByAuthentication(authentication:Authentication) : User {
         val userPrincipal = authentication.principal as UserPrincipal
-        return userRepository.findByUserName(userPrincipal.userName) ?: throw NotFoundException("User not found")
+        return userRepository.findByEmail(userPrincipal.email) ?: throw ModelNotFoundException("User")
     }
 
     private fun findByFeedIdAndCommentId(feedId: Long,commentId: Long) : Comment {
-        return commentRepository.findByFeedIdAndId(feedId,commentId) ?: throw ModelNotFoundException("없는 feed입니다.",feedId)
+        return commentRepository.findByFeedIdAndId(feedId,commentId) ?: throw ModelNotFoundException(" feed.",feedId)
     }
 
     private fun checkUserAuthorization(user:User,comment:Comment){
-        if(user.id != comment.user.id) throw NotFoundException("권한이 없습니다.")
+        if(user.id != comment.user.id) throw IllegalStateException("권한이 없습니다.")
     }
 
 
