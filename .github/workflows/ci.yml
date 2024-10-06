@@ -18,6 +18,12 @@ jobs:
     # 배열로 선언시 개수 만큼 반복해서 실행한다. ( 예제 : 1번 실행)
     runs-on: [ ubuntu-latest ]
 
+    services:
+      redis:
+        image: redis:latest
+        ports:
+          - 6379:6379
+
     # 실제 실행 스크립트
     steps:
       # uses는 github actions에서 제공하는 플러그인을 실행.(git checkout 실행)
