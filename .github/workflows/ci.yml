@@ -54,6 +54,8 @@ jobs:
           JWT_ACCESS_TOKEN_EXPIRATION_HOUR: ${{ secrets.JWT_ACCESS_TOKEN_EXPIRATION_HOUR }}
           JWT_ISSUER: ${{ secrets.JWT_ISSUER }}
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          REDIS_HOST: ${{ secrets.REDIS_HOST }}
+          REDIS_PORT: ${{ secrets.REDIS_PORT }}
 
         run: |
           ./gradlew clean test
