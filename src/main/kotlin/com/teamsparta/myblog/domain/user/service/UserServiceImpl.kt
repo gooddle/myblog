@@ -40,21 +40,14 @@ class UserServiceImpl(
 
     @Transactional
     override fun signUpUser(request: SignUpRequest): UserResponse {
-        //발급 받은 인증 코드와 회원가입 시 기입한 코드 비교
         checkEmail(request.email,request.emailCode)
 
         if (userRepository.existsByEmail(request.email))
             throw IllegalStateException("이미 사용중인 이름입니다.")
 
-        val passwordPattern = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[!@#\$%^&*\\-_]).{4,}$".toRegex()
-
-        if (!request.password.matches(passwordPattern))
-            throw IllegalStateException("대문자 소문자 특수 기호로 이루어진 비밀번호로 작성해주세요")
-
         if (request.password.contains(request.email))
             throw IllegalStateException("비밀번호와 닉네임은 동일하거나 포함될 수 없습니다.")
 
-        //회원가입이 끝나면 redis에서 코드 삭제
         redisUtils.deleteData(request.emailCode)
 
 
@@ -68,7 +61,6 @@ class UserServiceImpl(
     }
 
 
-    //발급 받은 인증 코드
    private fun checkEmail(email:String,codeNumber: String):Boolean {
         val storedCode = redisUtils.getData(email)
         if(storedCode.isNullOrEmpty()||storedCode != codeNumber)throw IllegalStateException("인증번호 혹은 동일한 이메일을 사용해주세요")
