@@ -6,7 +6,7 @@ import jakarta.persistence.*
 @Entity
 @Table(name ="users")
 class User(
-    @Column(name="username", nullable = false)
+    @Column(name="email", nullable = false)
     var email: String,
 
     @Column(name="password", nullable = false)
@@ -20,6 +20,7 @@ class User(
 
 fun User.toResponse(): UserResponse {
     return UserResponse(
-        id=id!!
+        id=id!!,
+        email =email
     )
 }
