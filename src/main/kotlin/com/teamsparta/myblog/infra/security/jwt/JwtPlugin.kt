@@ -27,14 +27,14 @@ class JwtPlugin(
             Jwts.parser().verifyWith(key).build().parseSignedClaims(jwt)
         }
     }
-    fun generateAccessToken(subject: String,  userName: String): String {
-        return generateToken(subject, userName, Duration.ofHours(accessTokenExpirationHour))
+    fun generateAccessToken(subject: String,  email: String): String {
+        return generateToken(subject, email, Duration.ofHours(accessTokenExpirationHour))
     }
 
 
 
-    private fun generateToken(subject: String,  userName: String,expirationPeriod: Duration): String {
-        val claims: Claims = Jwts.claims().add(mapOf("userName" to userName)).build()
+    private fun generateToken(subject: String,  email: String,expirationPeriod: Duration): String {
+        val claims: Claims = Jwts.claims().add(mapOf("email" to email)).build()
 
         val now = Instant.now()
         val key = Keys.hmacShaKeyFor(secret.toByteArray(StandardCharsets.UTF_8))

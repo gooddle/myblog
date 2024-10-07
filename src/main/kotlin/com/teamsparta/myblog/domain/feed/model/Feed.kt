@@ -76,7 +76,7 @@ fun Feed.toResponse(): CreateFeedResponse {
         content = content,
         createdAt = createdAt,
         deleted = deleted,
-        category = feedCategory.name,
+        category = feedCategory,
         comments = comments.map { it.toResponse() }
     )
 }
@@ -89,7 +89,7 @@ fun Feed.toUpdateResponse(): UpdateFeedResponse {
         createdAt = createdAt,
         updatedAt = updatedAt,
         deleted = deleted,
-        category = feedCategory.name,
+        category = feedCategory,
         comments = comments.map{it.toUpdateResponse()}
     )
 }

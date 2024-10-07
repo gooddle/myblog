@@ -7,7 +7,7 @@ import jakarta.persistence.*
 @Table(name ="users")
 class User(
     @Column(name="username", nullable = false)
-    var userName: String,
+    var email: String,
 
     @Column(name="password", nullable = false)
     var password: String,

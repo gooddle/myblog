@@ -20,7 +20,7 @@ class EmailServiceImpl(
     //메일 발송 시
     override fun sendEmail(email: String):Boolean {
         val codeNumber = generateCodeNumber()
-        redisUtils.setDataExpire(codeNumber, email)
+        redisUtils.setDataExpire(email, codeNumber)
 
         val message = getMailMessage(email, codeNumber)
 
