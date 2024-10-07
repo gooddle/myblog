@@ -2,6 +2,7 @@ package com.teamsparta.myblog.domain.feed.dto
 
 
 import com.teamsparta.myblog.domain.comment.dto.UpdateCommentResponse
+import com.teamsparta.myblog.domain.feed.model.FeedCategory
 import java.time.LocalDateTime
 
 data class UpdateFeedResponse(
@@ -12,6 +13,6 @@ data class UpdateFeedResponse(
     val createdAt : LocalDateTime,
     val updatedAt  : LocalDateTime?,
     val deleted: Boolean,
-    val category :String,
+    val category :FeedCategory,
     val comments :List<UpdateCommentResponse>
 )
