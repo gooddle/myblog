@@ -68,7 +68,7 @@ class CommentServiceImpl(
 
     private fun findUserByAuthentication(authentication:Authentication) : User {
         val userPrincipal = authentication.principal as UserPrincipal
-        return userRepository.findByUserName(userPrincipal.userName) ?: throw NotFoundException("User not found")
+        return userRepository.findByEmail(userPrincipal.email) ?: throw NotFoundException("User not found")
     }
 
     private fun findByFeedIdAndCommentId(feedId: Long,commentId: Long) : Comment {
