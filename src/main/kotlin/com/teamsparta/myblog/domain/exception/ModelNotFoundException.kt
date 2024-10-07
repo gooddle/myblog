@@ -1,4 +1,7 @@
 package com.teamsparta.myblog.domain.exception
 
-data class ModelNotFoundException(val modelName: String, val id: Long?) :
-    RuntimeException("Model $modelName not found with given id: $id")
+class ModelNotFoundException : RuntimeException {
+    constructor(modelName: String) : super("Model with name $modelName not found")
+    constructor(modelName: String, id: Long) : super("Model with name $modelName not found with id $id")
+    constructor(modelName: String, name: String) : super("Model with name $modelName not found with $name")
+}

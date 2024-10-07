@@ -1,5 +1,5 @@
 # Actions 이름 github 페이지에서 볼 수 있다.
-name: Run Test
+name: Build Test
 
 # Event Trigger 특정 액션 (Push, Pull_Request)등이 명시한 Branch에서 일어나면 동작을 수행한다.
 on:
@@ -17,6 +17,12 @@ jobs:
     # 스크립트 실행 환경 (OS)
     # 배열로 선언시 개수 만큼 반복해서 실행한다. ( 예제 : 1번 실행)
     runs-on: [ ubuntu-latest ]
+
+    services:
+      redis:
+        image: redis:latest
+        ports:
+          - 6379:6379
 
     # 실제 실행 스크립트
     steps:
@@ -36,5 +42,20 @@ jobs:
 
       # run은 사용자 지정 스크립트 실행
       - name: run unittest
+        env :
+
+          DB_URL: ${{ secrets.DB_URL }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          MAIL_HOST: ${{secrets.MAIL_HOST}}
+          MAIL_PORT: ${{secrets.MAIL_PORT}}
+          MAIL_USERNAME: ${{secrets.MAIL_USERNAME}}
+          MAIL_PASSWORD: ${{secrets.MAIL_PASSWORD}}
+          JWT_ACCESS_TOKEN_EXPIRATION_HOUR: ${{ secrets.JWT_ACCESS_TOKEN_EXPIRATION_HOUR }}
+          JWT_ISSUER: ${{ secrets.JWT_ISSUER }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          REDIS_HOST: ${{ secrets.REDIS_HOST }}
+          REDIS_PORT: ${{ secrets.REDIS_PORT }}
+
         run: |
           ./gradlew clean test
