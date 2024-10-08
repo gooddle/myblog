@@ -37,7 +37,7 @@
 - redis 이용 이메일 인증 코드 관리 
 
 
-# 4. API diagram
+# 4. ERD
 
 ![myblog – comment 2024-06-30 오후 4_52_13](https://github.com/gooddle/myblog/assets/128583844/fcede526-8ffd-49ee-a0bb-0472f7350f75)
 
