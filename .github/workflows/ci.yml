@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-    runs-on: [ ubuntu-latest ]
+    runs-on: ubuntu-latest
 
     services:
       redis:
@@ -18,22 +18,19 @@ jobs:
           - 6379:6379
 
     steps:
-      - name: Build Application
-        run: ./gradlew build
-
-      - name: checkout
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: java setup
+      - name: Set up JDK
         uses: actions/setup-java@v2
         with:
           distribution: 'adopt'
           java-version: '17'
 
-      - name: make executable gradlew
+      - name: Make Gradle Wrapper executable
         run: chmod +x ./gradlew
 
-      - name: run unittest
+      - name: Run unit tests
         env:
           DB_URL: ${{ secrets.DB_URL }}
           DB_USERNAME: ${{ secrets.DB_USERNAME }}
@@ -47,12 +44,17 @@ jobs:
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
           REDIS_HOST: ${{ secrets.REDIS_HOST }}
           REDIS_PORT: ${{ secrets.REDIS_PORT }}
-
         run: |
           ./gradlew clean test
 
       - name: Build Docker image
         run: docker build -t myblog-app .
+
+      - name: Build myblog-mail Docker image
+        run: |
+                cd .mail # myblog-mail Dockerfile이 위치한 경로로 이동
+                docker build -t myblog-mail . # Dockerfile을 사용하여 이미지 빌드
+                cd .. # 원래 디렉토리로 돌아오기
 
       - name: Run Docker container
         run: |
@@ -71,8 +73,10 @@ jobs:
             -e REDIS_PORT=${{ secrets.REDIS_PORT }} \
             myblog-app
 
-      - name: Set up Docker Compose
-        run: sudo apt-get install docker-compose
+      - name: Install Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
 
       - name: Run services with Docker Compose
         run: |
