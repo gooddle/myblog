@@ -46,7 +46,6 @@ jobs:
           REDIS_PORT: ${{ secrets.REDIS_PORT }}
         run: |
           ./gradlew clean test
-          
 
       - name: Build project with Gradle
         run: ./gradlew build
@@ -56,28 +55,9 @@ jobs:
 
       - name: Build myblog-mail Docker image
         run: |
-                cd .mail # myblog-mail Dockerfile이 위치한 경로로 이동
-                docker build -t myblog-mail . # Dockerfile을 사용하여 이미지 빌드
-                cd .. # 원래 디렉토리로 돌아오기
+          cd .mail # myblog-mail Dockerfile이 위치한 경로로 이동
+          docker build -t myblog-mail . # Dockerfile을 사용하여 이미지 빌드
+          cd .. # 원래 디렉토리로 돌아오기
 
-      - name: Install Docker Compose
-        run: |
-            sudo apt-get update
-            sudo apt-get install -y docker-compose
 
-      - name: Run services with Docker Compose
-        run: |
-          docker-compose up -d
-        env:
-          DB_URL: ${{ secrets.DB_URL }}
-          DB_USERNAME: ${{ secrets.DB_USERNAME }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          MAIL_HOST: ${{ secrets.MAIL_HOST }}
-          MAIL_PORT: ${{ secrets.MAIL_PORT }}
-          MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
-          MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
-          JWT_ACCESS_TOKEN_EXPIRATION_HOUR: ${{ secrets.JWT_ACCESS_TOKEN_EXPIRATION_HOUR }}
-          JWT_ISSUER: ${{ secrets.JWT_ISSUER }}
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}
-          REDIS_HOST: ${{ secrets.REDIS_HOST }}
-          REDIS_PORT: ${{ secrets.REDIS_PORT }}
+      
