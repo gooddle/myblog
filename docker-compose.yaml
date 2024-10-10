@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  app:
+    image: myblog-app
+    container_name: myblog-app-container
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_URL=${DB_URL}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - MAIL_HOST=${MAIL_HOST}
+      - MAIL_PORT=${MAIL_PORT}
+      - MAIL_USERNAME=${MAIL_USERNAME}
+      - MAIL_PASSWORD=${MAIL_PASSWORD}
+      - JWT_ACCESS_TOKEN_EXPIRATION_HOUR=${JWT_ACCESS_TOKEN_EXPIRATION_HOUR}
+      - JWT_ISSUER=${JWT_ISSUER}
+      - JWT_SECRET=${JWT_SECRET}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+
+  mail:
+    image: myblog-mail
+    container_name: myblog-mail
+    ports:
+      - "587:587"
+
+  redis:
+    image: redis:latest
+    container_name: myblog-redis
+    ports:
+      - "6379:6379"
+
+
+
+
+
+
+
