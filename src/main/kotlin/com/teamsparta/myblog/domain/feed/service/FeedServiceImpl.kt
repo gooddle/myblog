@@ -12,7 +12,6 @@ import com.teamsparta.myblog.domain.feed.model.toUpdateResponse
 import com.teamsparta.myblog.domain.feed.repository.FeedRepository
 import com.teamsparta.myblog.domain.user.model.User
 import com.teamsparta.myblog.domain.user.repository.UserRepository
-import com.teamsparta.myblog.infra.aop.NotFoundException
 import com.teamsparta.myblog.infra.security.UserPrincipal
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
@@ -37,35 +36,31 @@ class FeedServiceImpl(
     }
 
     override fun getFeedById(feedId: Long): UpdateFeedResponse {
-        val feed = feedRepository.findByFeedIdWithComments(feedId) ?: throw NotFoundException("Feed not found")
+        val feed = feedRepository.findByFeedIdWithComments(feedId) ?: throw ModelNotFoundException("Feed")
         if(feed.deleted) throw ModelNotFoundException("feed")
         return feed.toUpdateResponse()
     }
 
     @Transactional
-    override fun createFeed(request: FeedRequest, authentication: Authentication): CreateFeedResponse {
+    override fun createFeed(request: FeedRequest, category: FeedCategory,authentication: Authentication): CreateFeedResponse {
         val user = findUserByAuthentication(authentication)
         val feed = Feed(
             title = request.title,
             content = request.content,
             user = user,
-            feedCategory = when(request.category){
-                "IOS" -> FeedCategory.IOS
-                "ANDROID" -> FeedCategory.ANDROID
-                else -> FeedCategory.NORMAL
-            }
+           feedCategory = category,
         )
         return feedRepository.save(feed).toResponse()
     }
 
     @Transactional
-    override fun updateFeed(feedId: Long, request: FeedRequest, authentication: Authentication): UpdateFeedResponse {
+    override fun updateFeed(feedId: Long, request: FeedRequest,category: FeedCategory, authentication: Authentication): UpdateFeedResponse {
         val user = findUserByAuthentication(authentication)
         val feed = findFeedById(feedId)
         checkUserAuthorization(user, feed)
 
         if (feed.deleted) throw ModelNotFoundException("Feed")
-
+        feed.feedCategory = category
         feed.createFeedRequest(request)
         return feed.toUpdateResponse()
     }

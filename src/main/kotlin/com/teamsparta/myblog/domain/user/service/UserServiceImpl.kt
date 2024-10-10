@@ -1,7 +1,7 @@
 package com.teamsparta.myblog.domain.user.service
 
 
-import com.teamsparta.myblog.domain.common.RedisUtils
+import com.teamsparta.myblog.infra.RedisUtils
 import com.teamsparta.myblog.domain.exception.ModelNotFoundException
 import com.teamsparta.myblog.domain.user.dto.LoginRequest
 import com.teamsparta.myblog.domain.user.dto.LoginResponse

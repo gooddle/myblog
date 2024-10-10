@@ -6,21 +6,20 @@ import jakarta.persistence.*
 @Entity
 @Table(name ="users")
 class User(
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Long? = null,
+
     @Column(name="email", nullable = false)
     var email: String,
 
     @Column(name="password", nullable = false)
     var password: String,
-) {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long? = null
-}
+)
 
 fun User.toResponse(): UserResponse {
     return UserResponse(
-        id=id!!,
+        id=this.id!!,
         email =email
     )
 }

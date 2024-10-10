@@ -13,8 +13,8 @@ interface FeedService {
 
     fun getFeedList(pageable: Pageable,title: String?,firstDay: Long?,secondDay: Long?,category: FeedCategory?): Page<PageFeedResponse>
     fun getFeedById(feedId:Long) : UpdateFeedResponse
-    fun createFeed(request: FeedRequest, authentication: Authentication): CreateFeedResponse
-    fun updateFeed(feedId: Long,request:FeedRequest,authentication: Authentication): UpdateFeedResponse
+    fun createFeed(request: FeedRequest, category: FeedCategory,authentication: Authentication): CreateFeedResponse
+    fun updateFeed(feedId: Long,request:FeedRequest,category: FeedCategory,authentication: Authentication): UpdateFeedResponse
     fun deleteFeed(feedId:Long,authentication: Authentication)
     fun recoverFeed(feedId: Long,authentication: Authentication) :UpdateFeedResponse
 }

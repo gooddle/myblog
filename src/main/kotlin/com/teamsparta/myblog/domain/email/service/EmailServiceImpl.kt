@@ -1,6 +1,6 @@
 package com.teamsparta.myblog.domain.email.service
 
-import com.teamsparta.myblog.domain.common.RedisUtils
+import com.teamsparta.myblog.infra.RedisUtils
 import jakarta.mail.Message
 import jakarta.mail.internet.InternetAddress
 import jakarta.mail.internet.MimeMessage

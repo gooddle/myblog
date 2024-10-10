@@ -3,7 +3,6 @@ package com.teamsparta.myblog.domain.feed.model
 import com.teamsparta.myblog.domain.feed.dto.CreateFeedResponse
 import com.teamsparta.myblog.domain.comment.model.Comment
 import com.teamsparta.myblog.domain.comment.model.toResponse
-import com.teamsparta.myblog.domain.comment.model.toUpdateResponse
 import com.teamsparta.myblog.domain.feed.dto.FeedRequest
 import com.teamsparta.myblog.domain.feed.dto.UpdateFeedResponse
 import com.teamsparta.myblog.domain.user.model.User
@@ -13,6 +12,9 @@ import java.time.LocalDateTime
 @Entity
 @Table(name = "feed")
 class Feed(
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Long? = null,
 
     @Column(name ="title",nullable = false)
     var title: String,
@@ -45,11 +47,6 @@ class Feed(
 
 
 ) {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long? = null
-
 
     fun createFeedRequest(request : FeedRequest) {
         title =request.title
@@ -90,6 +87,5 @@ fun Feed.toUpdateResponse(): UpdateFeedResponse {
         updatedAt = updatedAt,
         deleted = deleted,
         category = feedCategory,
-        comments = comments.map{it.toUpdateResponse()}
     )
 }
