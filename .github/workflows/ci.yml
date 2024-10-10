@@ -67,7 +67,7 @@ jobs:
 
       - name: Run services with Docker Compose
         run: |
-          docker-compose up -d
+          docker-compose up
         env:
           DB_URL: ${{ secrets.DB_URL }}
           DB_USERNAME: ${{ secrets.DB_USERNAME }}
