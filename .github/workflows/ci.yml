@@ -46,6 +46,10 @@ jobs:
           REDIS_PORT: ${{ secrets.REDIS_PORT }}
         run: |
           ./gradlew clean test
+          
+
+      - name: Build project with Gradle
+        run: ./gradlew build
 
       - name: Build Docker image
         run: docker build -t myblog-app .
