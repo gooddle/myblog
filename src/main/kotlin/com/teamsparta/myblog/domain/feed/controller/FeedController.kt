@@ -40,9 +40,10 @@ class FeedController(
     @PostMapping
     fun createFeed(
         @RequestBody request: FeedRequest,
+        category: FeedCategory,
         authentication: Authentication
     ): ResponseEntity<CreateFeedResponse> {
-        return ResponseEntity.status(HttpStatus.CREATED).body(feedService.createFeed(request,authentication))
+        return ResponseEntity.status(HttpStatus.CREATED).body(feedService.createFeed(request,category,authentication))
     }
 
 
@@ -50,9 +51,10 @@ class FeedController(
     fun updateFeedById(
         @PathVariable feedId: Long,
         @RequestBody request: FeedRequest,
+        category: FeedCategory,
         authentication: Authentication
     ): ResponseEntity<UpdateFeedResponse> {
-        return ResponseEntity.status(HttpStatus.OK).body(feedService.updateFeed(feedId, request, authentication))
+        return ResponseEntity.status(HttpStatus.OK).body(feedService.updateFeed(feedId, request,category, authentication))
     }
 
     @DeleteMapping("/{feedId}")

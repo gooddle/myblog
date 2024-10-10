@@ -11,6 +11,10 @@ import java.time.LocalDateTime
 @Entity
 @Table(name = "comment")
 class Comment(
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Long? = null,
+
     @Column(name = "title")
     var title: String,
 
@@ -32,10 +36,6 @@ class Comment(
     var user : User,
 
     ) {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long? = null
 
 
     fun updateCommentRequest(request: CommentRequest) {

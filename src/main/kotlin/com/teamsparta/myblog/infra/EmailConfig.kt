@@ -1,4 +1,4 @@
-package com.teamsparta.myblog.domain.common
+package com.teamsparta.myblog.infra
 
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
