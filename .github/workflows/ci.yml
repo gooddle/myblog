@@ -60,28 +60,11 @@ jobs:
                 docker build -t myblog-mail . # Dockerfile을 사용하여 이미지 빌드
                 cd .. # 원래 디렉토리로 돌아오기
 
-      - name: Run Docker container
-        run: |
-          docker run -d --name myblog-app-container -p 8080:8080 \
-            -e DB_URL=${{ secrets.DB_URL }} \
-            -e DB_USERNAME=${{ secrets.DB_USERNAME }} \
-            -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
-            -e MAIL_HOST=${{ secrets.MAIL_HOST }} \
-            -e MAIL_PORT=${{ secrets.MAIL_PORT }} \
-            -e MAIL_USERNAME=${{ secrets.MAIL_USERNAME }} \
-            -e MAIL_PASSWORD=${{ secrets.MAIL_PASSWORD }} \
-            -e JWT_ACCESS_TOKEN_EXPIRATION_HOUR=${{ secrets.JWT_ACCESS_TOKEN_EXPIRATION_HOUR }} \
-            -e JWT_ISSUER=${{ secrets.JWT_ISSUER }} \
-            -e JWT_SECRET=${{ secrets.JWT_SECRET }} \
-            -e REDIS_HOST=${{ secrets.REDIS_HOST }} \
-            -e REDIS_PORT=${{ secrets.REDIS_PORT }} \
-            myblog-app
-
       - name: Install Docker Compose
         run: |
-          sudo apt-get update
-          sudo apt-get install -y docker-compose
+            sudo apt-get update
+            sudo apt-get install -y docker-compose
 
       - name: Run services with Docker Compose
         run: |
-          docker-compose up -d
+              docker-compose up -d # 모든 서비스를 백그라운드에서 실행
