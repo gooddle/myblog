@@ -20,6 +20,4 @@ class EmailCodeController(
         return ResponseEntity.status(HttpStatus.CREATED).body(emailService.sendEmail(request.email))
     }
 
-
-
 }
